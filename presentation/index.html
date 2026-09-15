@@ -3,257 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DM2601 — Presentation</title>
+<title>DM2601 · Presentation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #FAFAF7;
-    --ink: #1B1B18;
-    --ink-soft: #55534C;
-    --ink-faint: #9C9A91;
-    --accent: #38493F;
-    --line: #E4E1D8;
-    --card: #F2F0E9;
-    --serif: 'Fraunces', Georgia, serif;
-    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  }
-
-  *{ margin:0; padding:0; box-sizing:border-box; }
-
-  html,body{
-    height:100%;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--sans);
-    overflow:hidden;
-  }
-
-  .deck{
-    position:relative;
-    width:100vw;
-    height:100vh;
-  }
-
-  .slide{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding: 8vh 11vw;
-    opacity:0;
-    transform: translateY(36px);
-    pointer-events:none;
-    will-change: opacity, transform;
-    transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1);
-  }
-
-  /* not yet reached (waiting below) uses the base state above */
-
-  .slide.prev{
-    opacity:0;
-    transform: translateY(-36px);
-  }
-
-  .slide.active{
-    opacity:1;
-    transform: translateY(0);
-    pointer-events:auto;
-  }
-
-  .eyebrow{
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 1.4rem;
-  }
-
-  .eyebrow::before{
-    content: "";
-    display:inline-block;
-    width: 20px;
-    height: 1px;
-    background: var(--accent);
-    margin-right: 10px;
-    vertical-align: middle;
-  }
-
-  h1{
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: clamp(2.4rem, 5vw, 4.2rem);
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    max-width: 16ch;
-  }
-
-  h2{
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: clamp(2rem, 4.2vw, 3.4rem);
-    line-height: 1.12;
-    letter-spacing: -0.01em;
-    max-width: 18ch;
-    margin-bottom: 2.2rem;
-  }
-
-  .subtitle{
-    font-size: clamp(1rem, 1.3vw, 1.2rem);
-    color: var(--ink-soft);
-    font-weight: 400;
-    margin-top: 1.1rem;
-    max-width: 42ch;
-  }
-
-  .meta{
-    margin-top: 3.5rem;
-    font-size: 0.85rem;
-    color: var(--ink-faint);
-    display:flex;
-    gap: 2rem;
-  }
-
-  .meta span{ font-weight:500; color:var(--ink-soft); }
-
-  /* Content grid for sub-items */
-  .grid{
-    display:grid;
-    gap: 1.4rem;
-    margin-top: 0.4rem;
-  }
-
-  .grid.cols-2{ grid-template-columns: repeat(2, 1fr); }
-  .grid.cols-3{ grid-template-columns: repeat(3, 1fr); }
-  .grid.cols-4{ grid-template-columns: repeat(4, 1fr); }
-
-  @media (max-width: 900px){
-    .grid.cols-3{ grid-template-columns: repeat(2, 1fr); }
-    .grid.cols-4{ grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 600px), (max-height: 500px){
-    .slide{ padding: 6vh 7vw; }
-    .grid.cols-2, .grid.cols-3, .grid.cols-4{ grid-template-columns: 1fr; }
-    .nav{ left: 7vw; right: 7vw; }
-  }
-
-  .card{
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 1.5rem 1.6rem;
-    min-height: 150px;
-    display:flex;
-    flex-direction:column;
-  }
-
-  .card .label{
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 0.6rem;
-  }
-
-  .card .title{
-    font-family: var(--serif);
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: 0.55rem;
-  }
-
-  .card .placeholder{
-    font-size: 0.92rem;
-    color: var(--ink-faint);
-    font-style: italic;
-    line-height: 1.5;
-  }
-
-  .image-slot{
-    margin-top: 1.8rem;
-    border: 1.5px dashed var(--ink-faint);
-    border-radius: 6px;
-    min-height: 160px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color: var(--ink-faint);
-    font-size: 0.85rem;
-    font-style: italic;
-    text-align:center;
-  }
-
-  .image-slot img{
-    width:100%;
-    height:100%;
-    max-height: 38vh;
-    object-fit: cover;
-    border-radius: 5px;
-  }
-
-  /* Nav */
-  .nav{
-    position:fixed;
-    bottom: 3.2vh;
-    left: 11vw;
-    right: 11vw;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    z-index: 10;
-  }
-
-  .counter{
-    font-size: 0.82rem;
-    color: var(--ink-faint);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.02em;
-  }
-
-  .counter span{ color: var(--ink-soft); font-weight:500; }
-
-  .arrows{ display:flex; gap: 0.6rem; }
-
-  .arrow-btn{
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    background: var(--bg);
-    color: var(--ink);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    transition: border-color .2s ease, background .2s ease;
-  }
-
-  .arrow-btn:hover{ border-color: var(--accent); background: var(--card); }
-  .arrow-btn:disabled{ opacity: 0.3; cursor:default; }
-  .arrow-btn:disabled:hover{ border-color: var(--line); background: var(--bg); }
-
-  .progress{
-    position:fixed;
-    top:0; left:0;
-    height: 2px;
-    background: var(--accent);
-    width: 0%;
-    z-index: 10;
-    transition: width .6s cubic-bezier(.22,1,.36,1);
-  }
-
-  .closing{
-    align-items:center;
-    text-align:center;
-  }
-
-  .closing h1{ max-width: none; }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -275,50 +29,134 @@
   <!-- 1: Defining Ritual -->
   <section class="slide">
     <h2>Habit, Routine &amp; Ritual</h2>
-    <div class="grid cols-3">
-      <div class="card">
-        <div class="label">Habit</div>
-        <div class="placeholder">Add definition and example — add content here.</div>
+    <div class="compare">
+      <div class="compare-left">
+        <div class="card">
+          <div class="label">Habit</div>
+          <p class="def">Automatic and unconscious, done without intention. Nothing breaks if it's skipped.</p>
+        </div>
+        <div class="card">
+          <div class="label">Routine</div>
+          <p class="def">Deliberate but functional, built for efficiency, safety, or order. Skipping it breaks something practical.</p>
+        </div>
+        <div class="card ritual">
+          <div class="label">Ritual</div>
+          <p class="def">Consciously performed and symbolic, carrying emotional and social meaning. Skipping it just feels wrong.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="label">Routine</div>
-        <div class="placeholder">Add definition and example — add content here.</div>
-      </div>
-      <div class="card">
-        <div class="label">Ritual</div>
-        <div class="placeholder">Add definition and example — add content here.</div>
+      <div class="table-card">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Habit</th>
+              <th>Routine</th>
+              <th class="ritual-col">Ritual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Attention</th>
+              <td>Automatic, unconscious</td>
+              <td>Deliberate but functional</td>
+              <td class="ritual-col">Conscious, intentional</td>
+            </tr>
+            <tr>
+              <th>Purpose</th>
+              <td>None beyond itself</td>
+              <td>Efficiency, safety, order</td>
+              <td class="ritual-col">Meaning, transition, identity</td>
+            </tr>
+            <tr>
+              <th>Emotion</th>
+              <td>Neutral</td>
+              <td>Low</td>
+              <td class="ritual-col">Central</td>
+            </tr>
+            <tr>
+              <th>If skipped</th>
+              <td>Nothing</td>
+              <td>Something breaks</td>
+              <td class="ritual-col">Feels wrong</td>
+            </tr>
+            <tr>
+              <th>Example</th>
+              <td>Checking your phone on waking</td>
+              <td>Packing your bag the night before</td>
+              <td class="ritual-col">Making a wish before blowing out candles</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <!-- Replace this div with an <img src="your-image.jpg" alt="Reference"> to drop in a reference image -->
-    <div class="image-slot">Add reference image here</div>
   </section>
 
-  <!-- 2: Target User Group -->
-  <section class="slide">
-    <h2>Target User Group</h2>
-    <div class="grid cols-2">
-      <div class="card">
-        <div class="label">Who</div>
-        <div class="placeholder">Describe the group you're designing for — add content here.</div>
-      </div>
-      <div class="card">
-        <div class="label">Why this group</div>
-        <div class="placeholder">Note the rationale for choosing this group — add content here.</div>
-      </div>
+  <!-- 2: Target User Group, first round -->
+  <section class="slide zoom-from">
+    <div class="slide-head">
+      <h2>Exploring the Target User Group</h2>
+      <p class="slide-caption">Each of us proposed groups and the rituals they might hold. An open discussion and two rounds of voting narrowed a long list down to three, and then to one.</p>
+    </div>
+    <div class="scatter">
+      <div class="scatter-note" style="--x:14%; --y:14%; --r:-2.5deg">Musical actors</div>
+      <div class="scatter-note" style="--x:35%; --y:8%;  --r:1.5deg">Lawyers</div>
+      <div class="scatter-note" style="--x:57%; --y:9%;  --r:-1.5deg">Live dancers</div>
+      <div class="scatter-note" style="--x:78%; --y:15%; --r:2deg">Activists</div>
+      <div class="scatter-note" style="--x:8%;  --y:34%; --r:1deg">Travellers</div>
+      <div class="scatter-note" style="--x:91%; --y:33%; --r:-2deg">Doctors and nurses</div>
+      <div class="scatter-note" style="--x:8%;  --y:66%; --r:-1deg">Fitness enthusiasts</div>
+      <div class="scatter-note" style="--x:92%; --y:64%; --r:1.5deg">Competitive groups</div>
+      <div class="scatter-note" style="--x:16%; --y:87%; --r:2deg">Children and kids</div>
+      <div class="scatter-note" style="--x:38%; --y:92%; --r:-1.5deg">Working adults</div>
+      <div class="scatter-note" style="--x:61%; --y:90%; --r:1deg">Couples and friends</div>
+      <div class="scatter-note" style="--x:84%; --y:84%; --r:-2deg">Sports teams</div>
+
+      <div class="scatter-note near" style="--x:21%; --y:50%; --r:-1deg">People in elderly homes, and the nurses who work there</div>
+      <div class="scatter-note near" style="--x:79%; --y:50%; --r:1deg">School children and teachers</div>
+
+      <div class="scatter-focus" style="--x:50%; --y:50%">People who have trouble sleeping</div>
     </div>
   </section>
 
-  <!-- 3: High Level Ritual Domain -->
+  <!-- 3: Target User Group, drill down -->
+  <section class="slide zoom-to">
+    <div class="slide-head">
+      <h2>Finalizing the Target User Group</h2>
+      <p class="slide-caption">Reachability and the project timeline decided who we could realistically talk to. We also reframed the question, away from trouble sleeping and towards what helps someone sleep well, and the pre-sleep rituals that get them there.</p>
+    </div>
+    <div class="scatter">
+      <div class="scatter-note" style="--x:16%; --y:18%; --r:-2deg">People in leadership or managerial roles</div>
+      <div class="scatter-note" style="--x:50%; --y:11%; --r:1.5deg">Diagnosed with sleep issues</div>
+      <div class="scatter-note" style="--x:84%; --y:19%; --r:-1.5deg">Young parents</div>
+      <div class="scatter-note" style="--x:10%; --y:53%; --r:1deg">PhD students, and people before exams</div>
+      <div class="scatter-note" style="--x:90%; --y:53%; --r:-1deg">Night shift workers</div>
+      <div class="scatter-note" style="--x:24%; --y:87%; --r:2deg">Sleeping on a plane while travelling</div>
+      <div class="scatter-note" style="--x:72%; --y:87%; --r:-2deg">Tourists</div>
+
+      <div class="scatter-focus" style="--x:50%; --y:50%">People who have moved abroad for work or study</div>
+    </div>
+  </section>
+
+  <!-- 4: High Level Ritual Domain -->
   <section class="slide">
-    <h2>High Level Ritual Domain</h2>
-    <div class="grid cols-2">
-      <div class="card">
-        <div class="label">a. Why?</div>
-        <div class="placeholder">Explain the motivation behind this domain — add content here.</div>
-      </div>
-      <div class="card">
-        <div class="label">b. How We Selected</div>
-        <div class="placeholder">Describe the selection process — add content here.</div>
+    <div class="slide-head">
+      <h2>High Level Ritual Domain</h2>
+      <p class="slide-caption">A new country and a new time zone quietly reset what people do before bed. We mapped the rituals that might be in play, rather than committing to any one of them.</p>
+    </div>
+    <div class="scatter">
+      <div class="scatter-note" style="--x:13%; --y:14%; --r:-2deg">Calling parents or family before bed</div>
+      <div class="scatter-note" style="--x:40%; --y:7%;  --r:1.5deg">Answering messages from friends</div>
+      <div class="scatter-note" style="--x:67%; --y:9%;  --r:-1.5deg">Scrolling social media in bed</div>
+      <div class="scatter-note" style="--x:89%; --y:20%; --r:2deg">Watching a movie or show to wind down</div>
+      <div class="scatter-note" style="--x:8%;  --y:48%; --r:1deg">Phone placed face-down on the table</div>
+      <div class="scatter-note" style="--x:91%; --y:50%; --r:-1deg">Chatting with the roommate every evening</div>
+      <div class="scatter-note" style="--x:18%; --y:85%; --r:-2deg">Closing the activity rings</div>
+      <div class="scatter-note" style="--x:50%; --y:91%; --r:1.5deg">Saving articles to read later</div>
+      <div class="scatter-note" style="--x:80%; --y:84%; --r:-1.5deg">Maintaining a streak with a friend</div>
+
+      <div class="fork" style="--x:50%; --y:50%">
+        <p class="fork-rejected">Commit to one ritual and research it deeply</p>
+        <p class="fork-chosen">Keep the interviews open-ended, and let what people actually do decide what we solve</p>
       </div>
     </div>
   </section>
@@ -335,7 +173,7 @@
   <section class="slide">
     <h2>Literature Review</h2>
     <div class="card" style="max-width: 640px;">
-      <div class="placeholder">Summarize key sources, findings, and how they inform the project — add content here.</div>
+      <div class="placeholder">Summarize key sources, findings, and how they inform the project. Add content here.</div>
     </div>
   </section>
 
@@ -359,7 +197,54 @@
     </div>
   </section>
 
-  <!-- 7: Data Analysis -->
+  <!-- 7: Persona -->
+  <section class="slide">
+    <h2>Persona</h2>
+    <div class="persona">
+      <div class="persona-card">
+        <div class="persona-ident">
+          <div class="persona-photo">
+            <!-- Replace this span with <img src="images/marie.jpg" alt="Marie"> -->
+            <span>Add photo</span>
+          </div>
+          <div class="persona-name">Marie, 24</div>
+          <div class="persona-role">Professional from Seoul, working in Stockholm. Bachelor's in Economics.</div>
+        </div>
+        <p class="persona-quote">"Moving to a new country to work and being away from my family is a big adventure for me, so during my pre-sleep routine I try to relax and wind down."</p>
+      </div>
+      <div class="persona-body">
+        <div class="persona-section">
+          <div class="label">Background Story</div>
+          <p class="persona-story">Marie is from Seoul in South Korea and recently moved to Stockholm together with a roommate for her career. It is important to her to establish a routine to get used to her new environment and the new time zone as fast as possible. To stay in contact with her friends and family, she uses her phone a lot. Before she goes to sleep she usually calls her parents or answers text messages from her friends. She also likes to scroll through social media but wants to reduce her screen time, because she feels guilty about it, especially before going to sleep since it has an effect on her sleep. Social interaction is very important to her, that's why she likes to chat with her roommate every evening. To wind down before sleep she usually watches a movie or a TV show.</p>
+        </div>
+        <div class="persona-attrs">
+          <div>
+            <div class="label">Problems</div>
+            <ul>
+              <li>Using her phone too much and feeling guilty</li>
+            </ul>
+          </div>
+          <div>
+            <div class="label">Goals</div>
+            <ul>
+              <li>Wanting to stay connected to home</li>
+              <li>Reducing her screen time</li>
+              <li>Relaxing and calming down during her sleep routine by consuming media</li>
+            </ul>
+          </div>
+          <div>
+            <div class="label">Behaviours</div>
+            <ul>
+              <li>Consuming media before going to sleep</li>
+              <li>Calling friends and family, spending time with roommate</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8: Data Analysis -->
   <section class="slide">
     <h2>Data Analysis</h2>
     <div class="grid cols-4">
@@ -382,17 +267,17 @@
     </div>
   </section>
 
-  <!-- 8: Design Direction -->
+  <!-- 9: Design Direction -->
   <section class="slide">
     <h2>Design Direction We Want to Take</h2>
     <div class="card" style="max-width: 640px;">
-      <div class="placeholder">Describe the direction, rationale, and next steps — add content here.</div>
+      <div class="placeholder">Describe the direction, rationale, and next steps. Add content here.</div>
     </div>
   </section>
 
-  <!-- 9: Closing -->
+  <!-- 10: Closing -->
   <section class="slide closing">
-    <div class="eyebrow" style="margin-left:auto;margin-right:auto;">Thank You</div>
+    <div class="eyebrow">Thank You</div>
     <h1>Questions?</h1>
   </section>
 
@@ -406,56 +291,7 @@
   </div>
 </div>
 
-<script>
-  const slides = document.querySelectorAll('.slide');
-  const total = slides.length;
-  let current = 0;
-
-  const currentEl = document.getElementById('current');
-  const totalEl = document.getElementById('total');
-  const progressEl = document.getElementById('progress');
-  const prevBtn = document.getElementById('prev');
-  const nextBtn = document.getElementById('next');
-
-  totalEl.textContent = String(total).padStart(2, '0');
-
-  function render(){
-    slides.forEach((s, i) => {
-      s.classList.toggle('active', i === current);
-      s.classList.toggle('prev', i < current);
-    });
-    currentEl.textContent = String(current + 1).padStart(2, '0');
-    progressEl.style.width = ((current + 1) / total * 100) + '%';
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
-  }
-
-  function go(delta){
-    const next = current + delta;
-    if(next < 0 || next >= total) return;
-    current = next;
-    render();
-  }
-
-  prevBtn.addEventListener('click', () => go(-1));
-  nextBtn.addEventListener('click', () => go(1));
-
-  window.addEventListener('keydown', (e) => {
-    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); go(1); }
-    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); go(-1); }
-    if(e.key === 'Home'){ current = 0; render(); }
-    if(e.key === 'End'){ current = total - 1; render(); }
-  });
-
-  let touchStartX = 0;
-  window.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
-  window.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].screenX - touchStartX;
-    if(Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
-  });
-
-  render();
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>

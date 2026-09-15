@@ -1,0 +1,633 @@
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root{
+  --bg: #FAFAF7;
+  --ink: #1B1B18;
+  --ink-soft: #55534C;
+  --ink-faint: #9C9A91;
+  --accent: #38493F;
+  --accent-2: #1954A6;
+  --accent-2-tint: #EDF2F9;
+  --accent-2-line: #C3D5EC;
+  --line: #E6E3DB;
+  --line-soft: #EFEDE6;
+  --card: #FFFFFF;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html,body{
+  height:100%;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  overflow:hidden;
+}
+
+/* ==========================================================================
+   Deck & slide transitions
+   ========================================================================== */
+.deck{
+  position:relative;
+  width:100vw;
+  height:100vh;
+}
+
+/* Slides cut instantly. The only animated step is the target user group
+   zoom, which the deck opts into via .zooming (see the scatter section). */
+.slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding: 8vh 9vw;
+  opacity:0;
+  pointer-events:none;
+}
+
+.slide.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+.eyebrow{
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 1.4rem;
+}
+
+.eyebrow::before{
+  content: "";
+  display:inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--accent);
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+h1{
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  max-width: 16ch;
+}
+
+h2{
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  max-width: 20ch;
+  margin-bottom: 1.9rem;
+}
+
+.subtitle{
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-top: 1.1rem;
+  max-width: 42ch;
+}
+
+.meta{
+  margin-top: 3.5rem;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  display:flex;
+  gap: 2rem;
+}
+
+.meta span{ font-weight:500; color:var(--ink-soft); }
+
+/* ==========================================================================
+   Cards & generic grids
+   ========================================================================== */
+.grid{
+  display:grid;
+  gap: 1.4rem;
+  margin-top: 0.4rem;
+}
+
+.grid.cols-2{ grid-template-columns: repeat(2, 1fr); }
+.grid.cols-3{ grid-template-columns: repeat(3, 1fr); }
+.grid.cols-4{ grid-template-columns: repeat(4, 1fr); }
+
+.card{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem 1.6rem;
+  min-height: 150px;
+  display:flex;
+  flex-direction:column;
+}
+
+.label{
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.card .title{
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.55rem;
+}
+
+.card .placeholder{
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Reusable image drop-in for future slides */
+.image-slot{
+  margin-top: 1.8rem;
+  border: 1.5px dashed var(--ink-faint);
+  border-radius: 8px;
+  min-height: 160px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align:center;
+}
+
+.image-slot img{
+  width:100%;
+  height:100%;
+  max-height: 38vh;
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+/* ==========================================================================
+   Habit / Routine / Ritual comparison
+   ========================================================================== */
+.compare{
+  display:grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+  align-items:stretch;
+}
+
+.compare-left{
+  display:flex;
+  flex-direction:column;
+  gap: 1rem;
+}
+
+.compare-left .card{
+  flex:1;
+  min-height:0;
+  justify-content:center;
+  padding: 1.15rem 1.35rem;
+}
+
+.compare-left .def{
+  font-size: 0.87rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.card.ritual{
+  background: var(--accent-2-tint);
+  border-color: var(--accent-2);
+}
+
+.card.ritual .label{ color: var(--accent-2); }
+
+/* Table lives inside its own card; rows run edge to edge, cell padding
+   supplies the inset, and the ritual column reads as one clean vertical band. */
+.table-card{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow:hidden;
+  min-width:0;
+  display:flex;
+}
+
+.compare-table{
+  width:100%;
+  height:100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.compare-table th,
+.compare-table td{
+  text-align:left;
+  padding: 0.8rem 1.1rem;
+  line-height: 1.45;
+  vertical-align: middle;
+}
+
+.compare-table th:first-child,
+.compare-table td:first-child{ padding-left: 1.5rem; width: 19%; }
+
+.compare-table th:last-child,
+.compare-table td:last-child{ padding-right: 1.5rem; }
+
+.compare-table thead th{
+  padding-top: 1.15rem;
+  padding-bottom: 0.85rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-table tbody tr + tr th,
+.compare-table tbody tr + tr td{
+  border-top: 1px solid var(--line-soft);
+}
+
+.compare-table tbody th{
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.8rem;
+}
+
+.compare-table td{ color: var(--ink-soft); }
+
+.compare-table .ritual-col{
+  background: var(--accent-2-tint);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.compare-table thead .ritual-col{ color: var(--accent-2); }
+
+/* ==========================================================================
+   Target user group: scattered notes narrowing to one focus
+   ========================================================================== */
+.slide-head{ margin-bottom: 1.6rem; }
+.slide-head h2{ margin-bottom: 0.75rem; }
+
+.slide-caption{
+  font-size: 0.87rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 76ch;
+}
+
+.scatter{
+  position:relative;
+  flex:1;
+  min-height:0;
+}
+
+.scatter-note,
+.scatter-focus{
+  position:absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+  background: var(--card);
+  text-align:center;
+}
+
+.scatter-note{
+  width: 152px;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--ink-faint);
+  box-shadow: 0 1px 2px rgba(27,27,24,0.04);
+}
+
+/* The two other finalists: same language, just closer in and more legible. */
+.scatter-note.near{
+  width: 170px;
+  color: var(--ink-soft);
+  border-color: var(--ink-faint);
+  font-weight: 500;
+}
+
+.scatter-focus{
+  width: 252px;
+  padding: 1.15rem 1.2rem;
+  background: var(--accent-2-tint);
+  border: 1.5px solid var(--accent-2);
+  border-radius: 6px;
+  color: var(--accent-2);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.3;
+  box-shadow: 0 2px 12px rgba(25,84,166,0.09);
+  z-index: 2;
+}
+
+/* Where a chosen ritual would sit, the decision not to choose one sits
+   instead: the rejected path struck out above, the path taken below. */
+.fork{
+  position:absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  width: 332px;
+  background: var(--card);
+  border: 1.5px solid var(--accent-2);
+  border-radius: 6px;
+  overflow:hidden;
+  box-shadow: 0 2px 12px rgba(25,84,166,0.09);
+  z-index: 2;
+}
+
+.fork-rejected{
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.79rem;
+  line-height: 1.4;
+  color: var(--ink-faint);
+  text-decoration: line-through;
+  text-align:center;
+}
+
+.fork-chosen{
+  padding: 1rem 1.15rem;
+  background: var(--accent-2-tint);
+  color: var(--accent-2);
+  font-family: var(--serif);
+  font-size: 0.97rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align:center;
+}
+
+/* The first slide flies into its focus note, the second arrives from inside
+   it. Origin is nudged below centre to sit on the focus note, not the slide.
+   These resting transforms apply always, so the zoom has a start state to
+   animate from, but they only animate while the deck is .zooming. */
+.slide.zoom-from,
+.slide.zoom-to{
+  transform-origin: 50% 58%;
+  will-change: opacity, transform;
+}
+
+.slide.zoom-from.prev{
+  opacity: 0;
+  transform: scale(2.3);
+}
+
+.slide.zoom-to:not(.active):not(.prev){
+  opacity: 0;
+  transform: scale(0.55);
+}
+
+.zooming .slide.zoom-from,
+.zooming .slide.zoom-to{
+  transition: opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1);
+}
+
+.zooming .slide.zoom-from.prev .scatter-note{
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+/* ==========================================================================
+   Persona
+   ========================================================================== */
+.persona{
+  display:grid;
+  grid-template-columns: 27% 1fr;
+  gap: 1.5rem;
+  align-items:stretch;
+}
+
+/* Padding sits on the inner sections, never the card, so every divider
+   inside a card runs edge to edge. */
+.persona-card{
+  background: var(--accent-2-tint);
+  border: 1px solid var(--accent-2);
+  border-radius: 8px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.persona-ident{
+  padding: 1.9rem 1.5rem 1.6rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap: 0.55rem;
+}
+
+.persona-photo{
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1.5px dashed var(--ink-faint);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 0.68rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  overflow:hidden;
+  flex-shrink:0;
+  margin-bottom: 0.4rem;
+}
+
+.persona-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+.persona-name{
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.persona-role{
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  max-width: 24ch;
+}
+
+.persona-quote{
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--accent-2);
+  line-height: 1.6;
+  text-align:center;
+  padding: 1.3rem 1.5rem;
+  border-top: 1px solid var(--accent-2-line);
+}
+
+.persona-body{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+}
+
+.persona-section{ padding: 1.7rem 1.9rem; }
+
+.persona-story{
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.persona-attrs{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.persona-attrs > div{ padding: 1.5rem 1.6rem; }
+
+.persona-attrs > div + div{ border-left: 1px solid var(--line); }
+
+.persona-attrs ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap: 0.45rem;
+}
+
+.persona-attrs li{
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  padding-left: 0.85rem;
+  position:relative;
+}
+
+.persona-attrs li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0.55em;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background: var(--accent);
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+.nav{
+  position:fixed;
+  bottom: 3.2vh;
+  left: 9vw;
+  right: 9vw;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index: 10;
+}
+
+.counter{
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.counter span{ color: var(--ink-soft); font-weight:500; }
+
+.arrows{ display:flex; gap: 0.6rem; }
+
+.arrow-btn{
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.arrow-btn:hover{ border-color: var(--accent); background: var(--card); }
+.arrow-btn:disabled{ opacity: 0.3; cursor:default; }
+.arrow-btn:disabled:hover{ border-color: var(--line); background: var(--bg); }
+
+.progress{
+  position:fixed;
+  top:0; left:0;
+  height: 2px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 10;
+  transition: width .6s cubic-bezier(.22,1,.36,1);
+}
+
+.closing{
+  align-items:center;
+  text-align:center;
+}
+
+.closing h1{ max-width: none; }
+
+.closing .eyebrow{ margin-left:auto; margin-right:auto; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1100px){
+  .persona{ grid-template-columns: 32% 1fr; }
+}
+
+@media (max-width: 900px){
+  .grid.cols-3,
+  .grid.cols-4{ grid-template-columns: repeat(2, 1fr); }
+  .compare{ grid-template-columns: 1fr; }
+  .persona{ grid-template-columns: 1fr; }
+  .persona-attrs{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px), (max-height: 500px){
+  .slide{ padding: 6vh 7vw; }
+  .grid.cols-2,
+  .grid.cols-3,
+  .grid.cols-4{ grid-template-columns: 1fr; }
+  .nav{ left: 7vw; right: 7vw; }
+}
