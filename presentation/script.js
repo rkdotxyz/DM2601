@@ -1,4 +1,4 @@
-const slides = document.querySelectorAll('.slide');
+const slides = [...document.querySelectorAll('.slide')];
 const total = slides.length;
 let current = 0;
 
@@ -10,6 +10,39 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 
 totalEl.textContent = String(total).padStart(2, '0');
+
+// Double diamond. Horizontally the glyph runs 0 to 68, with the belly of the
+// first diamond at 17 and the waist at 34. Slides up to the diverge boundary
+// open it out; slides from there to the converge boundary close it again,
+// stopping just short of the waist because the second diamond is work this
+// project has not done yet. Every edge is the same length, so distance along
+// the line is proportional to distance across it.
+const DD_SPAN = 68;
+const DD_BELLY = 17;
+const DD_STOP = 32;          // close to the 34 waist, deliberately not on it
+const divergeEnd  = slides.findIndex(s => s.dataset.dd === 'diverge-end');
+const convergeEnd = slides.findIndex(s => s.dataset.dd === 'converge-end');
+
+const ddLeads = [...document.querySelectorAll('.dd-lead')].map(path => {
+  const length = path.getTotalLength();
+  path.style.strokeDasharray = length;
+  path.style.strokeDashoffset = length;
+  return { path, length };
+});
+
+function ddReach(i){
+  if(i <= 0 || divergeEnd < 1) return 0;
+  if(i <= divergeEnd) return DD_BELLY * i / divergeEnd;
+  if(i >= convergeEnd) return DD_STOP;
+  return DD_BELLY + (DD_STOP - DD_BELLY) * (i - divergeEnd) / (convergeEnd - divergeEnd);
+}
+
+function drawDoubleDiamond(i){
+  const fraction = ddReach(i) / DD_SPAN;
+  ddLeads.forEach(({ path, length }) => {
+    path.style.strokeDashoffset = length * (1 - fraction);
+  });
+}
 
 // Fly each note from where it sat loose on the findings slide into the bucket
 // it was sorted into. Both slides stay laid out even while hidden, so the
@@ -53,6 +86,7 @@ function render(){
   if(slides[current].dataset.flip === 'affinity') flyNotesIntoBuckets(slides[current]);
   currentEl.textContent = String(current + 1).padStart(2, '0');
   progressEl.style.width = ((current + 1) / total * 100) + '%';
+  drawDoubleDiamond(current);
   prevBtn.disabled = current === 0;
   nextBtn.disabled = current === total - 1;
 }
