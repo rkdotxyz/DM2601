@@ -948,6 +948,36 @@ h2{
   transition: width .6s cubic-bezier(.22,1,.36,1);
 }
 
+/* Double diamond progress, top right. Quiet enough to ignore, readable
+   enough to reward anyone who looks. */
+.dd{
+  position:fixed;
+  top: 4vh;
+  right: 9vw;
+  width: 84px;
+  height: auto;
+  z-index: 10;
+  overflow: visible;
+}
+
+/* No non-scaling-stroke here: it makes the dash pattern resolve in screen
+   units while getTotalLength reports user units, and the mismatch leaves a
+   stray dash at the tail of the path. Stroke width is in user units instead. */
+.dd-track,
+.dd-lead{
+  fill:none;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: butt;
+}
+
+.dd-track{ stroke: #DCD8CE; }
+
+.dd-lead{
+  stroke: var(--ink);
+  transition: stroke-dashoffset .6s cubic-bezier(.22,1,.36,1);
+}
+
 .closing{
   align-items:center;
   text-align:center;

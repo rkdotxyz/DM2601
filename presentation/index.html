@@ -20,6 +20,19 @@
 </svg>
 
 <div class="progress" id="progress"></div>
+
+<!-- Where this project sits in the double diamond. Each diamond is a square
+     turned 45 degrees. The upper and lower edges are drawn twice: a grey
+     track, and a dark line that advances over it slide by slide, spreading
+     apart as the work diverges and closing as it converges. It never reaches
+     the waist, because the second diamond is work still ahead. -->
+<svg class="dd" viewBox="0 0 68 34" aria-hidden="true">
+  <path class="dd-track" d="M0,17 L17,0 L34,17 L51,0 L68,17"/>
+  <path class="dd-track" d="M0,17 L17,34 L34,17 L51,34 L68,17"/>
+  <path class="dd-lead"  d="M0,17 L17,0 L34,17 L51,0 L68,17"/>
+  <path class="dd-lead"  d="M0,17 L17,34 L34,17 L51,34 L68,17"/>
+</svg>
+
 <div class="deck" id="deck">
 
   <!-- 0: Title -->
@@ -259,7 +272,7 @@
   </section>
 
   <!-- 6: User Interview, participants -->
-  <section class="slide">
+  <section class="slide" data-dd="diverge-end">
     <div class="slide-head">
       <h2>User Interview &middot; Participants</h2>
       <p class="slide-caption">Nine people who had moved country for work or study. Each one a different origin and destination, so the pattern we were after had to hold across very different moves.</p>
@@ -546,7 +559,7 @@
   </section>
 
   <!-- 12: Design Directions -->
-  <section class="slide">
+  <section class="slide" data-dd="converge-end">
     <div class="slide-head">
       <h2>Three Directions to Take</h2>
       <p class="slide-caption">Three of the eight themes carried enough tension to design against. Each one is a ritual already in place that the move has strained.</p>
