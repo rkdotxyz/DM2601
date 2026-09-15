@@ -11,11 +11,46 @@ const nextBtn = document.getElementById('next');
 
 totalEl.textContent = String(total).padStart(2, '0');
 
+// Fly each note from where it sat loose on the findings slide into the bucket
+// it was sorted into. Both slides stay laid out even while hidden, so the
+// scattered position can just be measured off the real element.
+function flyNotesIntoBuckets(slide){
+  const notes = [...slide.querySelectorAll('.bucket-note[data-note]')];
+  const moves = notes.map(note => {
+    const from = document.querySelector(`.scatter-note[data-note="${note.dataset.note}"]`);
+    if(!from) return null;
+    const a = from.getBoundingClientRect();
+    const b = note.getBoundingClientRect();
+    return {
+      note,
+      dx: (a.left + a.width / 2) - (b.left + b.width / 2),
+      dy: (a.top + a.height / 2) - (b.top + b.height / 2),
+      rot: from.dataset.rot || 0
+    };
+  }).filter(Boolean);
+
+  moves.forEach(m => {
+    m.note.style.transition = 'none';
+    m.note.style.transform = `translate(${m.dx}px, ${m.dy}px) rotate(${m.rot}deg)`;
+  });
+
+  void slide.offsetWidth; // commit the scattered start state before releasing
+
+  moves.forEach((m, i) => {
+    const delay = i * 14;
+    m.note.style.transition =
+      `transform .85s cubic-bezier(.22,1,.36,1) ${delay}ms`;
+    m.note.style.transform = '';
+  });
+}
+
 function render(){
   slides.forEach((s, i) => {
     s.classList.toggle('active', i === current);
     s.classList.toggle('prev', i < current);
   });
+
+  if(slides[current].dataset.flip === 'affinity') flyNotesIntoBuckets(slides[current]);
   currentEl.textContent = String(current + 1).padStart(2, '0');
   progressEl.style.width = ((current + 1) / total * 100) + '%';
   prevBtn.disabled = current === 0;

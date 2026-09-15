@@ -4,12 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DM2601 · Presentation</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="person" viewBox="0 0 12 20">
+    <circle cx="6" cy="4.2" r="3.4"/>
+    <path d="M6 9.2c-3.3 0-5 2.2-5 5.2V20h10v-5.6c0-3-1.7-5.2-5-5.2Z"/>
+  </symbol>
+</svg>
 
 <div class="progress" id="progress"></div>
 <div class="deck" id="deck">
@@ -24,6 +32,7 @@
       <div><span>Course</span> DM2601</div>
       <div><span>Term</span> HT26</div>
     </div>
+    <div class="members"><span>Members</span> Ellen, Max, Rama Krushna, Roxanne</div>
   </section>
 
   <!-- 1: Defining Ritual -->
@@ -94,7 +103,7 @@
   <!-- 2: Target User Group, first round -->
   <section class="slide zoom-from">
     <div class="slide-head">
-      <h2>Exploring the Target User Group</h2>
+      <h2>Target User Group &middot; Exploring</h2>
       <p class="slide-caption">Each of us proposed groups and the rituals they might hold. An open discussion and two rounds of voting narrowed a long list down to three, and then to one.</p>
     </div>
     <div class="scatter">
@@ -121,7 +130,7 @@
   <!-- 3: Target User Group, drill down -->
   <section class="slide zoom-to">
     <div class="slide-head">
-      <h2>Finalizing the Target User Group</h2>
+      <h2>Target User Group &middot; Finalizing</h2>
       <p class="slide-caption">Reachability and the project timeline decided who we could realistically talk to. We also reframed the question, away from trouble sleeping and towards what helps someone sleep well, and the pre-sleep rituals that get them there.</p>
     </div>
     <div class="scatter">
@@ -161,51 +170,217 @@
     </div>
   </section>
 
-  <!-- 4: Brainstorming -->
-  <section class="slide">
-    <h2>Brainstorming</h2>
-    <div class="card" style="max-width: 640px;">
-      <div class="placeholder">Add brainstorming outcomes, sketches, or key directions explored here.</div>
-    </div>
-  </section>
-
   <!-- 5: Literature Review -->
   <section class="slide">
-    <h2>Literature Review</h2>
-    <div class="card" style="max-width: 640px;">
-      <div class="placeholder">Summarize key sources, findings, and how they inform the project. Add content here.</div>
+    <div class="slide-head">
+      <h2>Literature Review</h2>
+      <p class="slide-caption">Twelve papers across sleep technology, habit formation and ritual, read to see what had already been tried before we committed to a direction.</p>
+    </div>
+    <div class="papers">
+      <div class="paper">
+        <div class="paper-title">Everyday Disruptions to Goals: Implications for Wellbeing Technology</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:73%"></span><span style="width:95%"></span><span style="width:92%"></span><span style="width:66%"></span><span style="width:81%"></span><span style="width:96%"></span><span style="width:88%"></span><span style="width:98%"></span><span style="width:95%"></span><span style="width:62%"></span><span style="width:96%"></span><span style="width:58%"></span><span style="width:88%"></span><span style="width:74%"></span><span style="width:93%"></span></div><div class="paper-col"><span style="width:72%"></span><span style="width:70%"></span><span style="width:88%"></span><span style="width:92%"></span><span style="width:93%"></span><span style="width:88%"></span><span style="width:83%"></span><span style="width:98%"></span><span style="width:67%"></span><span style="width:72%"></span><span style="width:98%"></span><span style="width:67%"></span><span style="width:91%"></span><span style="width:82%"></span><span style="width:58%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">Don't Kick the Habit: The Role of Dependency in Habit Formation Apps</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:100%"></span><span style="width:62%"></span><span style="width:68%"></span><span style="width:95%"></span><span style="width:60%"></span><span style="width:77%"></span><span style="width:59%"></span><span style="width:75%"></span><span style="width:88%"></span><span style="width:96%"></span><span style="width:82%"></span><span style="width:85%"></span><span style="width:83%"></span><span style="width:94%"></span><span style="width:86%"></span></div><div class="paper-col"><span style="width:66%"></span><span style="width:81%"></span><span style="width:64%"></span><span style="width:60%"></span><span style="width:66%"></span><span style="width:89%"></span><span style="width:71%"></span><span style="width:74%"></span><span style="width:85%"></span><span style="width:98%"></span><span style="width:77%"></span><span style="width:84%"></span><span style="width:90%"></span><span style="width:82%"></span><span style="width:94%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">User Preferences for Interaction Timing in Smartwatch Sleep Hygiene Games</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:80%"></span><span style="width:92%"></span><span style="width:95%"></span><span style="width:84%"></span><span style="width:95%"></span><span style="width:72%"></span><span style="width:79%"></span><span style="width:59%"></span><span style="width:75%"></span><span style="width:96%"></span><span style="width:100%"></span><span style="width:68%"></span><span style="width:78%"></span><span style="width:92%"></span><span style="width:94%"></span></div><div class="paper-col"><span style="width:94%"></span><span style="width:64%"></span><span style="width:99%"></span><span style="width:71%"></span><span style="width:98%"></span><span style="width:94%"></span><span style="width:75%"></span><span style="width:76%"></span><span style="width:65%"></span><span style="width:62%"></span><span style="width:88%"></span><span style="width:98%"></span><span style="width:88%"></span><span style="width:63%"></span><span style="width:80%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">Routine Computing: A Systematic Review of Sensing Daily Life Dimensions</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:62%"></span><span style="width:84%"></span><span style="width:67%"></span><span style="width:59%"></span><span style="width:76%"></span><span style="width:85%"></span><span style="width:84%"></span><span style="width:65%"></span><span style="width:60%"></span><span style="width:96%"></span><span style="width:97%"></span><span style="width:60%"></span><span style="width:82%"></span><span style="width:95%"></span><span style="width:79%"></span></div><div class="paper-col"><span style="width:93%"></span><span style="width:75%"></span><span style="width:90%"></span><span style="width:73%"></span><span style="width:60%"></span><span style="width:77%"></span><span style="width:58%"></span><span style="width:62%"></span><span style="width:64%"></span><span style="width:96%"></span><span style="width:92%"></span><span style="width:60%"></span><span style="width:70%"></span><span style="width:84%"></span><span style="width:76%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">Opportunities for Computing Technologies to Support Healthy Sleep Behaviors</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:97%"></span><span style="width:74%"></span><span style="width:67%"></span><span style="width:60%"></span><span style="width:79%"></span><span style="width:78%"></span><span style="width:81%"></span><span style="width:66%"></span><span style="width:82%"></span><span style="width:82%"></span><span style="width:87%"></span><span style="width:91%"></span><span style="width:82%"></span><span style="width:99%"></span><span style="width:96%"></span></div><div class="paper-col"><span style="width:93%"></span><span style="width:64%"></span><span style="width:97%"></span><span style="width:90%"></span><span style="width:75%"></span><span style="width:85%"></span><span style="width:98%"></span><span style="width:73%"></span><span style="width:77%"></span><span style="width:85%"></span><span style="width:74%"></span><span style="width:91%"></span><span style="width:77%"></span><span style="width:93%"></span><span style="width:79%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">I Want to Keep My Phone Away From the Bed: Designing a Smart Pillow for Sleep Onset</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:58%"></span><span style="width:84%"></span><span style="width:95%"></span><span style="width:78%"></span><span style="width:59%"></span><span style="width:82%"></span><span style="width:97%"></span><span style="width:95%"></span><span style="width:98%"></span><span style="width:66%"></span><span style="width:61%"></span><span style="width:98%"></span><span style="width:98%"></span><span style="width:79%"></span><span style="width:87%"></span></div><div class="paper-col"><span style="width:80%"></span><span style="width:80%"></span><span style="width:96%"></span><span style="width:75%"></span><span style="width:89%"></span><span style="width:59%"></span><span style="width:95%"></span><span style="width:61%"></span><span style="width:59%"></span><span style="width:81%"></span><span style="width:74%"></span><span style="width:98%"></span><span style="width:87%"></span><span style="width:77%"></span><span style="width:95%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">Sleep Ecologies: Tools for Snoozy Autoethnography</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:96%"></span><span style="width:78%"></span><span style="width:69%"></span><span style="width:81%"></span><span style="width:69%"></span><span style="width:78%"></span><span style="width:81%"></span><span style="width:96%"></span><span style="width:74%"></span><span style="width:77%"></span><span style="width:82%"></span><span style="width:64%"></span><span style="width:59%"></span><span style="width:94%"></span><span style="width:66%"></span></div><div class="paper-col"><span style="width:77%"></span><span style="width:90%"></span><span style="width:72%"></span><span style="width:99%"></span><span style="width:75%"></span><span style="width:73%"></span><span style="width:78%"></span><span style="width:69%"></span><span style="width:85%"></span><span style="width:99%"></span><span style="width:64%"></span><span style="width:64%"></span><span style="width:96%"></span><span style="width:78%"></span><span style="width:79%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">Designing for Extreme Sleepers: Rethinking the Rhythms of Sleep Technology</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:72%"></span><span style="width:86%"></span><span style="width:68%"></span><span style="width:63%"></span><span style="width:79%"></span><span style="width:99%"></span><span style="width:71%"></span><span style="width:94%"></span><span style="width:86%"></span><span style="width:75%"></span><span style="width:72%"></span><span style="width:65%"></span><span style="width:60%"></span><span style="width:91%"></span><span style="width:70%"></span></div><div class="paper-col"><span style="width:78%"></span><span style="width:94%"></span><span style="width:69%"></span><span style="width:75%"></span><span style="width:79%"></span><span style="width:99%"></span><span style="width:63%"></span><span style="width:97%"></span><span style="width:80%"></span><span style="width:95%"></span><span style="width:66%"></span><span style="width:84%"></span><span style="width:76%"></span><span style="width:91%"></span><span style="width:75%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">More than Bedtime and the Bedroom: Sleep Management as Collaborative Work for the Family</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:87%"></span><span style="width:80%"></span><span style="width:98%"></span><span style="width:84%"></span><span style="width:76%"></span><span style="width:84%"></span><span style="width:94%"></span><span style="width:84%"></span><span style="width:60%"></span><span style="width:84%"></span><span style="width:67%"></span><span style="width:70%"></span><span style="width:58%"></span><span style="width:88%"></span><span style="width:97%"></span></div><div class="paper-col"><span style="width:90%"></span><span style="width:85%"></span><span style="width:93%"></span><span style="width:72%"></span><span style="width:60%"></span><span style="width:87%"></span><span style="width:100%"></span><span style="width:91%"></span><span style="width:76%"></span><span style="width:92%"></span><span style="width:79%"></span><span style="width:72%"></span><span style="width:62%"></span><span style="width:95%"></span><span style="width:76%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">ShutEye: Encouraging Awareness of Healthy Sleep Recommendations</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:65%"></span><span style="width:73%"></span><span style="width:60%"></span><span style="width:60%"></span><span style="width:90%"></span><span style="width:70%"></span><span style="width:85%"></span><span style="width:94%"></span><span style="width:61%"></span><span style="width:58%"></span><span style="width:88%"></span><span style="width:65%"></span><span style="width:68%"></span><span style="width:90%"></span><span style="width:77%"></span></div><div class="paper-col"><span style="width:73%"></span><span style="width:100%"></span><span style="width:59%"></span><span style="width:91%"></span><span style="width:92%"></span><span style="width:84%"></span><span style="width:61%"></span><span style="width:97%"></span><span style="width:65%"></span><span style="width:79%"></span><span style="width:66%"></span><span style="width:74%"></span><span style="width:92%"></span><span style="width:88%"></span><span style="width:61%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">Reverse Alarm Clock: A Research Through Design Example of Designing for the Self</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:80%"></span><span style="width:72%"></span><span style="width:70%"></span><span style="width:65%"></span><span style="width:92%"></span><span style="width:65%"></span><span style="width:68%"></span><span style="width:73%"></span><span style="width:75%"></span><span style="width:66%"></span><span style="width:58%"></span><span style="width:89%"></span><span style="width:98%"></span><span style="width:94%"></span><span style="width:83%"></span></div><div class="paper-col"><span style="width:61%"></span><span style="width:75%"></span><span style="width:73%"></span><span style="width:75%"></span><span style="width:97%"></span><span style="width:91%"></span><span style="width:91%"></span><span style="width:85%"></span><span style="width:61%"></span><span style="width:88%"></span><span style="width:78%"></span><span style="width:58%"></span><span style="width:61%"></span><span style="width:66%"></span><span style="width:60%"></span></div></div>
+      </div>
+      <div class="paper">
+        <div class="paper-title">Family Rituals and the Potential for Interaction Design</div>
+        <div class="paper-body"><div class="paper-col"><span style="width:65%"></span><span style="width:61%"></span><span style="width:62%"></span><span style="width:88%"></span><span style="width:60%"></span><span style="width:63%"></span><span style="width:90%"></span><span style="width:90%"></span><span style="width:89%"></span><span style="width:78%"></span><span style="width:68%"></span><span style="width:78%"></span><span style="width:62%"></span><span style="width:80%"></span><span style="width:82%"></span></div><div class="paper-col"><span style="width:99%"></span><span style="width:82%"></span><span style="width:95%"></span><span style="width:77%"></span><span style="width:81%"></span><span style="width:74%"></span><span style="width:70%"></span><span style="width:79%"></span><span style="width:85%"></span><span style="width:65%"></span><span style="width:66%"></span><span style="width:93%"></span><span style="width:58%"></span><span style="width:82%"></span><span style="width:63%"></span></div></div>
+      </div>
     </div>
   </section>
 
-  <!-- 6: User Interview -->
+  <!-- 5: User Interview, plan -->
   <section class="slide">
-    <h2>User Interview</h2>
-    <div class="grid cols-3">
+    <div class="slide-head">
+      <h2>User Interview &middot; Plan</h2>
+      <p class="slide-caption">Semi-structured conversations of roughly 20 to 30 minutes each, kept deliberately open so people could lead us to what actually mattered. Four areas anchored every session.</p>
+    </div>
+    <div class="grid cols-4">
       <div class="card">
-        <div class="label">a. Interview Plan</div>
-        <div class="title">4 Focus Areas</div>
-        <div class="placeholder">List the four focus areas here.</div>
+        <div class="area-num">01</div>
+        <div class="area-title">The pre-sleep routine</div>
+        <p class="area-text">What people actually do in the stretch before they fall asleep.</p>
       </div>
       <div class="card">
-        <div class="label">b. Statistics</div>
-        <div class="placeholder">Add participant numbers, demographics, methodology.</div>
+        <div class="area-num">02</div>
+        <div class="area-title">What changed</div>
+        <p class="area-text">How moving country, and a new time zone, reshaped that routine.</p>
       </div>
       <div class="card">
-        <div class="label">c. Findings</div>
-        <div class="placeholder">Summarize key takeaways from the interviews.</div>
+        <div class="area-num">03</div>
+        <div class="area-title">Going deeper</div>
+        <p class="area-text">Taking the rituals that surfaced and unpacking them one at a time.</p>
+      </div>
+      <div class="card">
+        <div class="area-num">04</div>
+        <div class="area-title">Needs and opportunities</div>
+        <p class="area-text">Friction, workarounds, and what people wished were different.</p>
       </div>
     </div>
   </section>
 
-  <!-- 7: Persona -->
+  <!-- 6: User Interview, participants -->
+  <section class="slide">
+    <div class="slide-head">
+      <h2>User Interview &middot; Participants</h2>
+      <p class="slide-caption">Nine people who had moved country for work or study. Each one a different origin and destination, so the pattern we were after had to hold across very different moves.</p>
+    </div>
+    <div class="participants">
+      <div class="stats-card">
+        <div class="stat">
+          <div class="label">Reason for moving</div>
+          <div class="people">
+            <svg class="person study"><use href="#person"/></svg>
+            <svg class="person study"><use href="#person"/></svg>
+            <svg class="person study"><use href="#person"/></svg>
+            <svg class="person study"><use href="#person"/></svg>
+            <svg class="person study"><use href="#person"/></svg>
+            <svg class="person work"><use href="#person"/></svg>
+            <svg class="person work"><use href="#person"/></svg>
+            <svg class="person work"><use href="#person"/></svg>
+            <svg class="person work"><use href="#person"/></svg>
+          </div>
+          <div class="stat-key">
+            <span><i class="sw study"></i>Studies 5</span>
+            <span><i class="sw work"></i>Work 4</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="label">Gender</div>
+          <div class="people">
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-b"><use href="#person"/></svg>
+            <svg class="person tone-b"><use href="#person"/></svg>
+            <svg class="person tone-b"><use href="#person"/></svg>
+            <svg class="person tone-b"><use href="#person"/></svg>
+          </div>
+          <div class="stat-key">
+            <span><i class="sw tone-a"></i>Women 5</span>
+            <span><i class="sw tone-b"></i>Men 4</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="label">Living situation</div>
+          <div class="people">
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-a"><use href="#person"/></svg>
+            <svg class="person tone-b"><use href="#person"/></svg>
+            <svg class="person tone-b"><use href="#person"/></svg>
+            <svg class="person tone-b"><use href="#person"/></svg>
+          </div>
+          <div class="stat-key">
+            <span><i class="sw tone-a"></i>Alone 6</span>
+            <span><i class="sw tone-b"></i>With someone 3</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map coordinates are plain lon/lat: x = lon + 180, y = 90 - lat.
+           Colour sits on the arcs, not the endpoints, because a place can be
+           both a study destination and a work one. Filled dot is where
+           someone moved from, ring is where they moved to. -->
+      <div class="map-card">
+        <div class="map-wrap">
+          <img class="map-base" src="images/world.svg" alt="">
+          <svg class="map" viewBox="50 10 280 80" preserveAspectRatio="xMidYMid meet">
+            <g class="arcs">
+              <path class="work" d="M258.9,68.0 Q170.2,27.01 81.5,50.2"/>
+              <path class="study" d="M188.2,43.2 Q192.1,33.18 196.0,29.0"/>
+              <path class="work" d="M179.87,38.49 Q178.09,41.94 176.3,49.6"/>
+              <path class="study" d="M307.8,53.5 Q245.07,24.63 182.35,41.14"/>
+              <path class="work" d="M258.9,68.0 Q218.45,36.34 178.0,36.0"/>
+              <path class="study" d="M284.2,54.1 Q231.1,25.66 178.0,36.0"/>
+              <path class="study" d="M307.8,53.5 Q251.9,20.65 196.0,29.0"/>
+              <path class="study" d="M171.8,50.6 Q126.65,34.15 81.5,50.2"/>
+              <path class="work" d="M246.9,42.0 Q270.54,45.16 294.17,67.68"/>
+            </g>
+            <g class="origins">
+              <circle cx="258.9" cy="68.0" r="1.4"/>
+              <circle cx="188.2" cy="43.2" r="1.4"/>
+              <circle cx="179.87" cy="38.49" r="1.4"/>
+              <circle cx="307.8" cy="53.5" r="1.4"/>
+              <circle cx="284.2" cy="54.1" r="1.4"/>
+              <circle cx="171.8" cy="50.6" r="1.4"/>
+              <circle cx="246.9" cy="42.0" r="1.4"/>
+            </g>
+            <g class="dests">
+              <circle cx="81.5" cy="50.2" r="1.9"/>
+              <circle cx="196.0" cy="29.0" r="1.9"/>
+              <circle cx="176.3" cy="49.6" r="1.9"/>
+              <circle cx="182.35" cy="41.14" r="1.9"/>
+              <circle cx="178.0" cy="36.0" r="1.9"/>
+              <circle cx="294.17" cy="67.68" r="1.9"/>
+            </g>
+          </svg>
+        </div>
+        <div class="map-foot">
+          <div class="stat-key">
+            <span><i class="sw study"></i>Moved to study</span>
+            <span><i class="sw work"></i>Moved for work</span>
+          </div>
+          <div class="label">Where they moved from and to</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9: Persona -->
   <section class="slide">
     <h2>Persona</h2>
     <div class="persona">
       <div class="persona-card">
         <div class="persona-ident">
           <div class="persona-photo">
-            <!-- Replace this span with <img src="images/marie.jpg" alt="Marie"> -->
-            <span>Add photo</span>
+            <img src="images/persona.png" alt="Marie">
           </div>
           <div class="persona-name">Marie, 24</div>
           <div class="persona-role">Professional from Seoul, working in Stockholm. Bachelor's in Economics.</div>
@@ -244,38 +419,237 @@
     </div>
   </section>
 
-  <!-- 8: Data Analysis -->
+  <!-- 7: User Interview, findings -->
   <section class="slide">
-    <h2>Data Analysis</h2>
-    <div class="grid cols-4">
-      <div class="card">
-        <div class="label">a. Affinity</div>
-        <div class="placeholder">Add affinity mapping insights.</div>
+    <div class="slide-head">
+      <h2>Research Findings</h2>
+      <p class="slide-caption">Everything the nine sessions surfaced, before any of it was sorted.</p>
+    </div>
+    <div class="scatter dense">
+      <div class="scatter-note" data-note="0" data-rot="3.5" style="--x:67.5%; --y:24.9%; --r:3.5deg">Not showering before bed feels wrong</div>
+      <div class="scatter-note" data-note="1" data-rot="-2.4" style="--x:79.3%; --y:57.3%; --r:-2.4deg">Brushing teeth is non-negotiable</div>
+      <div class="scatter-note" data-note="2" data-rot="-3.2" style="--x:67.1%; --y:60.1%; --r:-3.2deg">A shower resets the head after a stressful day</div>
+      <div class="scatter-note" data-note="3" data-rot="3.4" style="--x:67.5%; --y:12.1%; --r:3.4deg">Skipping the wash starts the next day wrong</div>
+      <div class="scatter-note" data-note="4" data-rot="0.2" style="--x:76.1%; --y:89.6%; --r:0.2deg">The nightly roommate chat is an intentional debrief</div>
+      <div class="scatter-note" data-note="5" data-rot="-0.7" style="--x:8.0%; --y:54.7%; --r:-0.7deg">Falls asleep better after voicing what worries her</div>
+      <div class="scatter-note" data-note="6" data-rot="-1.8" style="--x:32.4%; --y:89.0%; --r:-1.8deg">Missing the nightly chat would feel weird</div>
+      <div class="scatter-note" data-note="7" data-rot="0.7" style="--x:78.1%; --y:37.9%; --r:0.7deg">Calls with family get skipped when too tired</div>
+      <div class="scatter-note" data-note="8" data-rot="2.3" style="--x:92.0%; --y:89.4%; --r:2.3deg">The day feels incomplete without watching something</div>
+      <div class="scatter-note" data-note="9" data-rot="-0.3" style="--x:48.2%; --y:91.0%; --r:-0.3deg">Watching a show is time that is only theirs</div>
+      <div class="scatter-note" data-note="10" data-rot="-0.5" style="--x:8.0%; --y:40.0%; --r:-0.5deg">Swedish TV feels productive, like language practice</div>
+      <div class="scatter-note" data-note="11" data-rot="-3.1" style="--x:50.7%; --y:76.6%; --r:-3.1deg">Stressed after several days without TV time</div>
+      <div class="scatter-note" data-note="12" data-rot="2.9" style="--x:90.3%; --y:44.0%; --r:2.9deg">Dinner or meal prep is part of most routines</div>
+      <div class="scatter-note" data-note="13" data-rot="-3.3" style="--x:34.1%; --y:27.9%; --r:-3.3deg">Grocery shopping and meal prep induce stress</div>
+      <div class="scatter-note" data-note="14" data-rot="-0.0" style="--x:38.4%; --y:71.4%; --r:-0.0deg">Wants to combine dinner and watching to save time</div>
+      <div class="scatter-note" data-note="15" data-rot="2.4" style="--x:38.7%; --y:9.0%; --r:2.4deg">Guilty about doom scrolling</div>
+      <div class="scatter-note" data-note="16" data-rot="-2.6" style="--x:50.7%; --y:54.6%; --r:-2.6deg">Friction is not severe enough to force a change</div>
+      <div class="scatter-note" data-note="17" data-rot="1.6" style="--x:20.2%; --y:89.1%; --r:1.6deg">Stopping scrolling triggers a fear of missing out</div>
+      <div class="scatter-note" data-note="18" data-rot="3.1" style="--x:79.8%; --y:9.0%; --r:3.1deg">Wants to cut screen time even further</div>
+      <div class="scatter-note" data-note="19" data-rot="0.9" style="--x:21.8%; --y:29.6%; --r:0.9deg">Puts on a podcast with a sleep timer</div>
+      <div class="scatter-note" data-note="20" data-rot="2.0" style="--x:92.0%; --y:23.9%; --r:2.0deg">Walks or the gym before bed to free the mind</div>
+      <div class="scatter-note" data-note="21" data-rot="-2.8" style="--x:92.0%; --y:9.2%; --r:-2.8deg">Night walks now, closer to nature</div>
+      <div class="scatter-note" data-note="22" data-rot="-0.5" style="--x:10.6%; --y:9.0%; --r:-0.5deg">Physical activity helps avoid the evening nap</div>
+      <div class="scatter-note" data-note="23" data-rot="-2.5" style="--x:10.4%; --y:75.1%; --r:-2.5deg">Journaling appeals because it is off-screen</div>
+      <div class="scatter-note" data-note="24" data-rot="2.4" style="--x:65.8%; --y:37.8%; --r:2.4deg">A set start and end time would help journaling</div>
+      <div class="scatter-note" data-note="25" data-rot="-1.4" style="--x:92.0%; --y:70.6%; --r:-1.4deg">New routines stress when they feel like a to-do</div>
+      <div class="scatter-note" data-note="26" data-rot="-0.3" style="--x:48.5%; --y:41.7%; --r:-0.3deg">Scrolling swapped for reading a book</div>
+      <div class="scatter-note" data-note="27" data-rot="3.5" style="--x:79.8%; --y:23.8%; --r:3.5deg">Cleaning the apartment is how they unwind</div>
+      <div class="scatter-note" data-note="28" data-rot="2.5" style="--x:68.0%; --y:75.0%; --r:2.5deg">Most steps of the routine feel relaxing</div>
+      <div class="scatter-note" data-note="29" data-rot="3.3" style="--x:91.6%; --y:56.9%; --r:3.3deg">Mostly neutral, parts are tiring or boring</div>
+      <div class="scatter-note" data-note="30" data-rot="-0.3" style="--x:8.0%; --y:88.0%; --r:-0.3deg">Likes the changes since moving</div>
+      <div class="scatter-note" data-note="31" data-rot="-0.1" style="--x:32.7%; --y:58.5%; --r:-0.1deg">Wants the routine to feel productive too</div>
+    </div>
+  </section>
+
+  <!-- 8: Data Analysis, affinity diagramming
+       Each .bucket-note pairs with the .scatter-note of the same data-note on
+       the findings slide; script.js flies them from there into place. -->
+  <section class="slide" data-flip="affinity">
+    <div class="slide-head">
+      <h2>Data Analysis &middot; Affinity Diagramming</h2>
+      <p class="slide-caption">The same notes, clustered by what they had in common. Eight themes came out of the sort.</p>
+    </div>
+    <div class="affinity">
+      <div class="bucket">
+        <div class="bucket-head">Heavy Phone Usage</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="15">Guilty about doom scrolling</div>
+        <div class="bucket-note" data-note="16">Friction is not severe enough to force a change</div>
+        <div class="bucket-note" data-note="17">Stopping scrolling triggers a fear of missing out</div>
+        <div class="bucket-note" data-note="18">Wants to cut screen time even further</div>
+        <div class="bucket-note" data-note="19">Puts on a podcast with a sleep timer</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="label">b. Research Findings</div>
-        <div class="placeholder">Add key research findings.</div>
+      <div class="bucket">
+        <div class="bucket-head">Consuming Media</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="8">The day feels incomplete without watching something</div>
+        <div class="bucket-note" data-note="9">Watching a show is time that is only theirs</div>
+        <div class="bucket-note" data-note="10">Swedish TV feels productive, like language practice</div>
+        <div class="bucket-note" data-note="11">Stressed after several days without TV time</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="label">c. Persona</div>
-        <div class="placeholder">Add persona summary.</div>
+      <div class="bucket">
+        <div class="bucket-head">Social Interaction</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="4">The nightly roommate chat is an intentional debrief</div>
+        <div class="bucket-note" data-note="5">Falls asleep better after voicing what worries her</div>
+        <div class="bucket-note" data-note="6">Missing the nightly chat would feel weird</div>
+        <div class="bucket-note" data-note="7">Calls with family get skipped when too tired</div>
+        </div>
       </div>
-      <div class="card">
-        <div class="label">d. HMW</div>
-        <div class="placeholder">Add "How Might We" statements.</div>
+      <div class="bucket muted">
+        <div class="bucket-head">General Routine</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="0">Not showering before bed feels wrong</div>
+        <div class="bucket-note" data-note="1">Brushing teeth is non-negotiable</div>
+        <div class="bucket-note" data-note="2">A shower resets the head after a stressful day</div>
+        <div class="bucket-note" data-note="3">Skipping the wash starts the next day wrong</div>
+        </div>
+      </div>
+      <div class="bucket muted">
+        <div class="bucket-head">Dinner &amp; Eating</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="12">Dinner or meal prep is part of most routines</div>
+        <div class="bucket-note" data-note="13">Grocery shopping and meal prep induce stress</div>
+        <div class="bucket-note" data-note="14">Wants to combine dinner and watching to save time</div>
+        </div>
+      </div>
+      <div class="bucket muted">
+        <div class="bucket-head">Exercise</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="20">Walks or the gym before bed to free the mind</div>
+        <div class="bucket-note" data-note="21">Night walks now, closer to nature</div>
+        <div class="bucket-note" data-note="22">Physical activity helps avoid the evening nap</div>
+        </div>
+      </div>
+      <div class="bucket muted">
+        <div class="bucket-head">Something For Themselves</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="23">Journaling appeals because it is off-screen</div>
+        <div class="bucket-note" data-note="24">A set start and end time would help journaling</div>
+        <div class="bucket-note" data-note="25">New routines stress when they feel like a to-do</div>
+        <div class="bucket-note" data-note="26">Scrolling swapped for reading a book</div>
+        <div class="bucket-note" data-note="27">Cleaning the apartment is how they unwind</div>
+        </div>
+      </div>
+      <div class="bucket muted">
+        <div class="bucket-head">Relaxation During Routine</div>
+        <div class="bucket-notes">
+        <div class="bucket-note" data-note="28">Most steps of the routine feel relaxing</div>
+        <div class="bucket-note" data-note="29">Mostly neutral, parts are tiring or boring</div>
+        <div class="bucket-note" data-note="30">Likes the changes since moving</div>
+        <div class="bucket-note" data-note="31">Wants the routine to feel productive too</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 9: Design Direction -->
+  <!-- 12: Design Directions -->
   <section class="slide">
-    <h2>Design Direction We Want to Take</h2>
-    <div class="card" style="max-width: 640px;">
-      <div class="placeholder">Describe the direction, rationale, and next steps. Add content here.</div>
+    <div class="slide-head">
+      <h2>Three Directions to Take</h2>
+      <p class="slide-caption">Three of the eight themes carried enough tension to design against. Each one is a ritual already in place that the move has strained.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="area-num">01</div>
+        <div class="area-title">Heavy Phone Usage</div>
+        <p class="area-text">The phone is both the line home and the thing that steals the night. The pull is real in both directions.</p>
+      </div>
+      <div class="card">
+        <div class="area-num">02</div>
+        <div class="area-title">Consuming Media</div>
+        <p class="area-text">A show is the one hour that belongs to her. The comfort is worth keeping; the open ending is not.</p>
+      </div>
+      <div class="card">
+        <div class="area-num">03</div>
+        <div class="area-title">Social Interaction</div>
+        <p class="area-text">Sharing the day is how she winds down, but the people she wants to share it with are asleep.</p>
+      </div>
     </div>
   </section>
 
-  <!-- 10: Closing -->
+  <!-- 13: Direction, Heavy Phone Usage -->
+  <section class="slide">
+    <div class="slide-head">
+      <h2>Direction &middot; Heavy Phone Usage</h2>
+    </div>
+    <div class="direction">
+      <div class="card">
+        <div class="label">Scenario</div>
+        <p class="dir-text">Marie brushes her teeth and cleans off her makeup after a stressful day. Looking at her phone she sees notifications from Instagram, Snapchat and a text from her best friend Chloe. She texts Chloe back and then calls her mom back home. After the usual greetings and “I miss you”s they talk about Marie's new apartment, work and how she's settling in, as well as how life is going back home in Seoul. They talk for about half an hour. Talking to her family makes her feel more connected to home. When they hang up she remembers the YouTube video Luke sent her earlier in the day. Her younger brother has a real knack for finding new channels about her favourite interests. She watches it and texts to let him know she liked it. She checks the latest posts on Instagram, sends a funny meme to Chloe, and then gets stuck scrolling the explore page. An hour later she is still on the couch, and when she checks the time it is already late. She instantly worries she will not get enough sleep, and feels guilty about scrolling despite knowing her sleep is worse when she looks at her phone right before bed.</p>
+      </div>
+      <div class="direction-right">
+        <div class="card">
+          <div class="label">Point of View</div>
+          <p class="dir-text">A young professional who recently moved across the globe uses her phone both to interact with family and friends and to consume social media. Her sleep is affected when she gets stuck scrolling right before bed and she feels guilty about it, but the interaction with family and friends is really important to her.</p>
+        </div>
+        <div class="card hmw">
+          <div class="label">How Might We</div>
+          <ul class="hmw-list">
+            <li>How might we help people who have recently moved abroad reduce their screen time in the evening without losing out on precious interaction with family and friends?</li>
+            <li>How might we support synchronous and asynchronous social interaction with family and friends living far away without disturbing sleep patterns?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14: Direction, Consuming Media -->
+  <section class="slide">
+    <div class="slide-head">
+      <h2>Direction &middot; Consuming Media</h2>
+    </div>
+    <div class="direction">
+      <div class="card">
+        <div class="label">Scenario</div>
+        <p class="dir-text">It is 22:45. Marie finishes washing up, an essential physical reset after an exhausting day navigating meetings, Swedish conversations, and unfamiliar public transit in her new city. The room is quiet, but the silence makes her head race with thoughts about tomorrow's tasks and the overwhelming impressions of settling abroad. To create a protective boundary around her night, she props up her tablet in bed and puts on a lighthearted show. This matters to her because it is the only hour of the day entirely reserved for herself, where she does not have to adapt or perform. She intends to watch just one twenty-minute episode to unwind, but auto-play rolls into another. The bright screen keeps her awake, and not wanting her me-time to end pulls her into late-night browsing. By 00:15 the comforting wind-down has turned into an unintended screen marathon, leaving her guilty, physically unrested, and frustrated that her sacred me-time derailed her sleep.</p>
+      </div>
+      <div class="direction-right">
+        <div class="card">
+          <div class="label">Point of View</div>
+          <p class="dir-text">A newly relocated professional navigating sensory overload needs a way to engage with gentle, bounded audio-visual media as a cognitive grounding anchor before bed, because she relies on external stories to quiet racing thoughts and reclaim personal autonomy. Yet open-ended digital screens turn that restorative ritual into passive, guilt-inducing sleep delay.</p>
+        </div>
+        <div class="card hmw">
+          <div class="label">How Might We</div>
+          <ul class="hmw-list">
+            <li>How might we design a media wind-down experience that provides narrative comfort and cognitive distraction, while naturally tapering off to signal closure without abrupt cutoffs?</li>
+            <li>How might we transform bedtime media consumption from an addictive rabbit hole into an intentional closing ceremony for the day that still feels like me-time?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15: Direction, Social Interaction -->
+  <section class="slide">
+    <div class="slide-head">
+      <h2>Direction &middot; Social Interaction</h2>
+    </div>
+    <div class="direction">
+      <div class="card">
+        <div class="label">Scenario</div>
+        <p class="dir-text">It is 22:30 on a Tuesday night in Marie's small room in Stockholm. She has just finished chatting with her roommate in the kitchen and is getting into bed after a long first week at her new job. This is the moment she most wants to call her parents in Seoul and tell them about her day, because talking it through helps her process everything that is new and lets her fall asleep feeling calmer. But first she has to do the maths: Seoul is seven hours ahead, and soon it will be eight, once Sweden turns its clocks back and she has to relearn it all over again. That means it is already 05:30 tomorrow at home, and her parents are still asleep. Earlier, when they were free in their evening, she was in the middle of her workday. She types a long message instead, then keeps scrolling in case they wake early and reply, which she already feels guilty about. She falls asleep without the conversation she needed, and the day she wanted to share goes untold.</p>
+      </div>
+      <div class="direction-right">
+        <div class="card">
+          <div class="label">Point of View</div>
+          <p class="dir-text">Marie, a young professional who recently moved from Seoul to Stockholm, needs to share her day with her family as part of her evening wind-down, because talking things through helps her process her new life and relax before sleep. Yet when she is ready to talk her family is asleep, and when they are free, she is busy.</p>
+        </div>
+        <div class="card hmw">
+          <div class="label">How Might We</div>
+          <ul class="hmw-list">
+            <li>How might we help people who have moved abroad stay connected with friends and family spread across multiple time zones, as part of their bedtime routine?</li>
+            <li>How might we make it effortless to know when loved ones in different parts of the world are free to talk?</li>
+            <li>How might we help people keep in touch with a scattered circle of loved ones without having to line up everyone's schedules?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12: Closing -->
   <section class="slide closing">
     <div class="eyebrow">Thank You</div>
     <h1>Questions?</h1>
