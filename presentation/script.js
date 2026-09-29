@@ -14,12 +14,12 @@ totalEl.textContent = String(total).padStart(2, '0');
 // Double diamond. Horizontally the glyph runs 0 to 68, with the belly of the
 // first diamond at 17 and the waist at 34. Slides up to the diverge boundary
 // open it out; slides from there to the converge boundary close it again,
-// stopping just short of the waist because the second diamond is work this
-// project has not done yet. Every edge is the same length, so distance along
-// the line is proportional to distance across it.
+// meeting exactly at the waist, where the first diamond ends and the second
+// begins. Every edge is the same length, so distance along the line is
+// proportional to distance across it.
 const DD_SPAN = 68;
 const DD_BELLY = 17;
-const DD_STOP = 32;          // close to the 34 waist, deliberately not on it
+const DD_STOP = 34;          // the waist, where the two diamonds meet
 const divergeEnd  = slides.findIndex(s => s.dataset.dd === 'diverge-end');
 const convergeEnd = slides.findIndex(s => s.dataset.dd === 'converge-end');
 
