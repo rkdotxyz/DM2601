@@ -11,17 +11,22 @@ const nextBtn = document.getElementById('next');
 
 totalEl.textContent = String(total).padStart(2, '0');
 
-// Double diamond. Horizontally the glyph runs 0 to 68, with the belly of the
-// first diamond at 17 and the waist at 34. Slides up to the diverge boundary
-// open it out; slides from there to the converge boundary close it again,
-// meeting exactly at the waist, where the first diamond ends and the second
-// begins. Every edge is the same length, so distance along the line is
-// proportional to distance across it.
+// Double diamond. Horizontally the glyph runs 0 to 68, with the first
+// diamond's belly at 17, the waist at 34, and the second diamond's belly at
+// 51. Slides up to the diverge boundary open the first diamond; slides from
+// there to the converge boundary close it again, meeting exactly at the
+// waist. From the waist, the project opens the second diamond too, and
+// slides up to the diverge2-half boundary trace it out to the halfway point
+// of that divergence, since the project has not diverged fully yet. Every
+// edge is the same length, so distance along the line is proportional to
+// distance across it.
 const DD_SPAN = 68;
 const DD_BELLY = 17;
-const DD_STOP = 34;          // the waist, where the two diamonds meet
-const divergeEnd  = slides.findIndex(s => s.dataset.dd === 'diverge-end');
-const convergeEnd = slides.findIndex(s => s.dataset.dd === 'converge-end');
+const DD_WAIST = 34;         // the waist, where the two diamonds meet
+const DD_BELLY2_HALF = 42.5; // halfway from the waist to the second belly (51)
+const divergeEnd   = slides.findIndex(s => s.dataset.dd === 'diverge-end');
+const convergeEnd  = slides.findIndex(s => s.dataset.dd === 'converge-end');
+const diverge2Half = slides.findIndex(s => s.dataset.dd === 'diverge2-half');
 
 const ddLeads = [...document.querySelectorAll('.dd-lead')].map(path => {
   const length = path.getTotalLength();
@@ -33,8 +38,9 @@ const ddLeads = [...document.querySelectorAll('.dd-lead')].map(path => {
 function ddReach(i){
   if(i <= 0 || divergeEnd < 1) return 0;
   if(i <= divergeEnd) return DD_BELLY * i / divergeEnd;
-  if(i >= convergeEnd) return DD_STOP;
-  return DD_BELLY + (DD_STOP - DD_BELLY) * (i - divergeEnd) / (convergeEnd - divergeEnd);
+  if(i <= convergeEnd) return DD_BELLY + (DD_WAIST - DD_BELLY) * (i - divergeEnd) / (convergeEnd - divergeEnd);
+  if(diverge2Half < 1 || i >= diverge2Half) return DD_BELLY2_HALF;
+  return DD_WAIST + (DD_BELLY2_HALF - DD_WAIST) * (i - convergeEnd) / (diverge2Half - convergeEnd);
 }
 
 function drawDoubleDiamond(i){
