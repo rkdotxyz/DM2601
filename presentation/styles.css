@@ -1013,21 +1013,6 @@ h2{
 }
 
 /* ==========================================================================
-   Section dividers: a phase heading standing on its own, e.g. Ideation
-   ========================================================================== */
-.divider{
-  align-items:center;
-  text-align:center;
-}
-
-.divider h1{ max-width: none; }
-
-.divider .subtitle{
-  margin-left:auto;
-  margin-right:auto;
-}
-
-/* ==========================================================================
    Ideation: brainstorming grid
    ========================================================================== */
 .grid.cols-3.ideas .card{
