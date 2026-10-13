@@ -2,3 +2,17 @@
 
 # Claude Code worktrees
 **/.claude/worktrees/
+
+# WiFi credentials. Each sketch that needs them ships a secrets.example.h;
+# copy it to secrets.h next to it and fill in your network.
+secrets.h
+
+# Arduino IDE compiled output ("Export compiled binary")
+build/
+*.bin
+*.elf
+*.map
+
+# Editors
+.vscode/
+*.swp

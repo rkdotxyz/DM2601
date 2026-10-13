@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 540" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Heart Doll wiring</title>
+  <desc>ESP32 GPIO26, GPIO25 and GPIO27 each go through a 220 ohm resistor to the red, green and blue legs of a common-cathode RGB LED. The LED's common (longest) leg goes to the breadboard minus rail. GPIO32 goes through the Heart button and GPIO33 through the Cross button to the minus rail. ESP32 GND connects to the minus rail. The buttons need no resistors because the firmware uses the ESP32's internal pull-ups.</desc>
+
+  <!-- background so it reads in GitHub dark mode too -->
+  <rect x="0" y="0" width="820" height="540" rx="16" fill="#ffffff"/>
+
+  <!-- ESP32 -->
+  <rect x="30" y="50" width="190" height="370" rx="10" fill="#1b1f24"/>
+  <text x="125" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">ESP32 DevKit</text>
+  <text x="125" y="106" text-anchor="middle" font-size="13" fill="#b8c0c8">USB to computer</text>
+  <g font-size="15" font-family="Menlo, Consolas, monospace" fill="#ffffff" text-anchor="end">
+    <text x="208" y="145">GPIO26</text>
+    <text x="208" y="195">GPIO25</text>
+    <text x="208" y="245">GPIO27</text>
+    <text x="208" y="295">GND</text>
+    <text x="208" y="345">GPIO32</text>
+    <text x="208" y="395">GPIO33</text>
+  </g>
+
+  <!-- LED channels: GPIO -> 220 ohm -> leg -->
+  <g stroke-width="4" fill="none" stroke-linecap="round">
+    <path d="M220 140 H300" stroke="#d93025"/>
+    <path d="M360 140 H580" stroke="#d93025"/>
+    <path d="M220 190 H300" stroke="#188038"/>
+    <path d="M360 190 H580" stroke="#188038"/>
+    <path d="M220 240 H300" stroke="#1a73e8"/>
+    <path d="M360 240 H580" stroke="#1a73e8"/>
+  </g>
+  <g fill="#f6e7c8" stroke="#333" stroke-width="1.5">
+    <rect x="300" y="131" width="60" height="18" rx="4"/>
+    <rect x="300" y="181" width="60" height="18" rx="4"/>
+    <rect x="300" y="231" width="60" height="18" rx="4"/>
+  </g>
+  <g font-size="12" fill="#555" text-anchor="middle">
+    <text x="330" y="124">220 Ω</text>
+    <text x="330" y="174">220 Ω</text>
+    <text x="330" y="224">220 Ω</text>
+  </g>
+
+  <!-- RGB LED -->
+  <rect x="580" y="110" width="200" height="160" rx="10" fill="#fafafa" stroke="#333" stroke-width="1.5"/>
+  <text x="680" y="98" text-anchor="middle" font-size="16" font-weight="700" fill="#1b1f24">RGB LED, common cathode</text>
+  <circle cx="596" cy="140" r="6" fill="#d93025"/>
+  <circle cx="596" cy="190" r="6" fill="#188038"/>
+  <circle cx="596" cy="240" r="6" fill="#1a73e8"/>
+  <g font-size="14" fill="#1b1f24">
+    <text x="610" y="145">red leg</text>
+    <text x="610" y="195">green leg</text>
+    <text x="610" y="245">blue leg</text>
+  </g>
+  <circle cx="740" cy="270" r="5" fill="#333"/>
+  <text x="732" y="262" text-anchor="end" font-size="12" fill="#555">common (longest) leg</text>
+
+  <!-- ground rail -->
+  <path d="M240 440 H790" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+  <text x="240" y="466" font-size="13" fill="#333">− rail (GND) on the breadboard</text>
+  <g stroke="#333" stroke-width="4" fill="none" stroke-linecap="round">
+    <path d="M220 290 H260 V440"/>
+    <path d="M740 270 V440"/>
+    <path d="M500 340 H540 V440"/>
+    <path d="M500 390 H540"/>
+  </g>
+  <g fill="#333">
+    <circle cx="260" cy="440" r="5"/>
+    <circle cx="540" cy="440" r="5"/>
+    <circle cx="740" cy="440" r="5"/>
+    <circle cx="540" cy="390" r="4"/>
+  </g>
+
+  <!-- buttons: GPIO -> button -> GND -->
+  <g stroke="#e37400" stroke-width="4" fill="none" stroke-linecap="round">
+    <path d="M220 340 H420"/>
+    <path d="M220 390 H420"/>
+  </g>
+  <g stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <path d="M412 326 H508"/><path d="M460 326 V314"/>
+    <path d="M412 376 H508"/><path d="M460 376 V364"/>
+  </g>
+  <g fill="#333">
+    <circle cx="420" cy="340" r="5"/><circle cx="500" cy="340" r="5"/>
+    <circle cx="420" cy="390" r="5"/><circle cx="500" cy="390" r="5"/>
+  </g>
+  <path d="M420 340 H422" stroke="#e37400"/>
+  <g font-size="13" fill="#1b1f24" text-anchor="middle">
+    <text x="320" y="332">Heart button</text>
+    <text x="320" y="382">Cross button</text>
+  </g>
+
+  <!-- notes -->
+  <g font-size="13" fill="#555">
+    <text x="30" y="500">Common-anode LED? Put its common leg on 3V3 instead of GND,</text>
+    <text x="30" y="518">and set COMMON_ANODE = true in config.h.</text>
+    <text x="450" y="500">No resistors on the buttons: the ESP32's</text>
+    <text x="450" y="518">internal pull-ups (INPUT_PULLUP) do that job.</text>
+  </g>
+</svg>

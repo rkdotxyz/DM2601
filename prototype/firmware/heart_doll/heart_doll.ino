@@ -18,6 +18,7 @@
     app_link.h        WiFi, the web server and the WebSocket to the phone
     web_page.h        the phone app itself (HTML, CSS, JavaScript)
     secrets.h         your WiFi name and password (never committed)
+    secrets.example.h template: copy it to secrets.h and fill it in
     heart_doll.ino    this file: turns inputs into events, applies the
                       rules, and carries out the effects
 
