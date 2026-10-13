@@ -1,7 +1,4 @@
 .DS_Store
 
-# Prototype: real Wi-Fi credentials stay local
-secrets.h
-
 # Claude Code worktrees
 **/.claude/worktrees/
