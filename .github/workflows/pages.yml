@@ -3,6 +3,7 @@
 #   https://rkdotxyz.github.io/DM2601/               the repo (README, presentation, prototype docs)
 #   https://rkdotxyz.github.io/DM2601/presentation/  the deck
 #   https://rkdotxyz.github.io/DM2601/website/       the Heart Doll customiser, built from website/
+#   https://rkdotxyz.github.io/DM2601/app/           the phone app, with a simulated doll, built from prototype/app/
 #
 # Needs Settings → Pages → Source set to "GitHub Actions".
 name: Pages
@@ -38,7 +39,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: website/package-lock.json
+          cache-dependency-path: |
+            website/package-lock.json
+            prototype/app/package-lock.json
       - name: Build the website
         working-directory: website
         run: |
@@ -51,6 +54,20 @@ jobs:
           sudo rm -rf _site/website
           sudo mkdir -p _site/website
           sudo cp -r website/dist/. _site/website/
+
+      - name: Build the app demo
+        working-directory: prototype/app
+        run: |
+          npm ci
+          npm run build:demo
+
+      # The app's demo build, with a simulated doll, at /app/. Jekyll's copy
+      # of prototype/app/ (the source) is left out of the site.
+      - name: Add the app demo to the site
+        run: |
+          sudo rm -rf _site/app _site/prototype/app
+          sudo mkdir -p _site/app
+          sudo cp -r prototype/app/dist/. _site/app/
 
       - uses: actions/upload-pages-artifact@v3
         with:
