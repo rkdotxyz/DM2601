@@ -11,6 +11,7 @@ Everything for our DM2601 project at KTH (Media Technology and Interaction Desig
 |---|---|---|
 | [`presentation/`](presentation) | The project deck: target group, literature, interviews, persona, affinity analysis, direction and ideation. Plain HTML, no build step | Open `presentation/index.html` |
 | [`prototype/`](prototype) | **Heart Doll:** an ESP32 doll whose heart glows when someone far away is there for you, with a phone app it serves itself. Firmware, wiring, parts list, build guide | [`prototype/README.md`](prototype/README.md) |
+| [`prototype/app/`](prototype/app) | The phone app, rebuilt in 3D: a glass heart that fills as the two people join. React + React Three Fiber; the demo runs with a simulated doll | [Live demo](https://rkdotxyz.github.io/DM2601/app/) · [`prototype/app/README.md`](prototype/app/README.md) |
 | [`website/`](website) | A 3D customiser for the doll: colours, hats, glasses, extras, stickers, drawing, places, and a heart that glows like the real one. React + React Three Fiber, standalone | [Live](https://rkdotxyz.github.io/DM2601/website/) · [`website/README.md`](website/README.md) |
 | [`workbook/`](workbook) | The project workbook (PDF), once it's ready | – |
 
@@ -37,7 +38,7 @@ npm run dev
 
 ## Hosting
 
-GitHub Pages publishes the repo from `main` with the workflow in [`.github/workflows/pages.yml`](.github/workflows/pages.yml): the deck at [`/presentation/`](https://rkdotxyz.github.io/DM2601/presentation/) and the customiser, built from `website/`, at [`/website/`](https://rkdotxyz.github.io/DM2601/website/).
+GitHub Pages publishes the repo from `main` with the workflow in [`.github/workflows/pages.yml`](.github/workflows/pages.yml): the deck at [`/presentation/`](https://rkdotxyz.github.io/DM2601/presentation/) the customiser, built from `website/`, at [`/website/`](https://rkdotxyz.github.io/DM2601/website/), and the app demo, built from `prototype/app/`, at [`/app/`](https://rkdotxyz.github.io/DM2601/app/).
 
 ## Repo layout
 

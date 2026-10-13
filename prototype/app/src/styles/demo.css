@@ -1,0 +1,149 @@
+/* The demo page around the app: the phone frame and the simulated doll. */
+
+/* ----- wide screens: intro, phone, doll ----- */
+.demo-wide {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(220px, 330px) auto minmax(260px, 320px);
+  align-items: center;
+  justify-content: center;
+  gap: clamp(28px, 4vw, 64px);
+  padding: 32px clamp(24px, 4vw, 56px);
+  background:
+    radial-gradient(50% 60% at 50% 45%, color-mix(in srgb, var(--bg-glow) 45%, transparent), transparent 70%),
+    var(--night);
+}
+.demo-intro .eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.demo-intro h1 {
+  margin: 10px 0 12px;
+  font: 480 clamp(40px, 4.4vw, 56px)/1 var(--serif);
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144, "SOFT" 50;
+}
+.demo-intro p { margin: 0 0 18px; color: var(--muted); font-size: 15.5px; line-height: 1.55; }
+.repo { color: var(--red-soft); font-weight: 600; text-decoration: none; }
+.repo:hover { text-decoration: underline; }
+
+.device {
+  width: 390px;
+  height: min(844px, calc(100dvh - 64px));
+  min-height: 600px;
+  padding: 11px;
+  border-radius: 56px;
+  background: #0e0a0c;
+  box-shadow:
+    0 0 0 1.5px #2a2226,
+    0 40px 90px -30px rgb(60 10 25 / 0.55),
+    0 12px 30px -12px rgb(0 0 0 / 0.35);
+}
+.device-screen { height: 100%; border-radius: 46px; overflow: hidden; position: relative; }
+.device-screen .phone { padding-top: 22px; }
+
+/* ----- narrow screens: the app, with the doll docked at the bottom ----- */
+.demo-narrow { height: 100dvh; display: flex; flex-direction: column; background: var(--night); }
+.demo-narrow-app { flex: 1; min-height: 0; }
+.demo-narrow-app .phone { padding-bottom: 8px; }
+.demo-narrow .doll.compact { background: #160e12; border-color: var(--line-strong); }
+
+/* ----- the simulated doll ----- */
+.doll {
+  background: var(--surface-solid);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.doll.compact {
+  border-radius: 24px 24px 0 0;
+  border-bottom: 0;
+  padding: 14px 16px max(14px, env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 30px -18px rgb(60 10 25 / 0.35);
+}
+.doll-head { display: flex; align-items: center; gap: 14px; }
+.doll-title { font-weight: 650; display: flex; align-items: center; gap: 8px; }
+.tag {
+  font-size: 10.5px; font-weight: 650; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 999px;
+  background: color-mix(in srgb, var(--liquid-top) 14%, transparent);
+  color: var(--red-soft);
+}
+.doll-state { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.doll-state code { font: 600 12px ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink); }
+
+/* the LED, set behind a frosted "fabric" window */
+.led {
+  --led: rgb(255 70 90 / 0.1);
+  --led-glow: 0px;
+  flex: none;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, var(--led) 0 30%, transparent 72%),
+    radial-gradient(circle at 35% 30%, var(--shell-hi), var(--shell));
+  box-shadow: 0 0 var(--led-glow) var(--led), inset 0 1px 3px rgb(0 0 0 / 0.12);
+  border: 1px solid var(--line);
+}
+.compact .led { width: 42px; height: 42px; }
+
+.doll-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.compact .doll-buttons { margin-top: 12px; }
+.hw {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  height: 52px;
+  border: 0;
+  border-radius: 16px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: transform 0.12s cubic-bezier(.3, 1.6, .5, 1), box-shadow 0.12s, filter 0.2s;
+}
+.compact .hw { height: 46px; }
+.hw svg { width: 18px; height: 18px; }
+.hw.heart {
+  color: #fff;
+  background: linear-gradient(180deg, var(--liquid-top), var(--liquid-deep));
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--liquid-deep) 70%, black), 0 10px 20px -8px var(--liquid-deep);
+}
+.hw.heart svg { fill: #fff; }
+.hw.cross {
+  background: #2c1f25;
+  box-shadow: 0 4px 0 #120b0e, inset 0 0 0 1px var(--line);
+}
+.hw.cross svg { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+.hw:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 #120b0e; }
+.hw.heart:active:not(:disabled) { box-shadow: 0 1px 0 color-mix(in srgb, var(--liquid-deep) 70%, black); }
+.hw:disabled { filter: grayscale(1) opacity(0.45); cursor: default; }
+.hw:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.doll-help { margin: 16px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+.doll-help b { color: var(--ink); font-weight: 600; }
+.doll-led { display: flex; gap: 8px; margin: 12px 0 0; font-size: 13px; }
+.doll-led dt { font-weight: 650; }
+.doll-led dd { margin: 0; color: var(--muted); }
+
+.doll-switches {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+}
+.compact .doll-switches { flex-direction: row; justify-content: space-between; gap: 8px; margin-top: 12px; padding-top: 10px; font-size: 12.5px; }
+.switch { display: flex; align-items: center; gap: 9px; cursor: pointer; color: var(--muted); }
+.switch input { position: absolute; opacity: 0; pointer-events: none; }
+.switch .track {
+  flex: none; width: 34px; height: 20px; border-radius: 999px;
+  background: #3a2a31; position: relative; transition: background 0.2s;
+}
+.switch .track span {
+  position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+  transition: transform 0.22s cubic-bezier(.3, 1.4, .5, 1);
+}
+.switch input:checked + .track { background: var(--liquid-top); }
+.switch input:checked + .track span { transform: translateX(14px); }
+.switch input:focus-visible + .track { outline: 2px solid var(--ink); outline-offset: 2px; }
