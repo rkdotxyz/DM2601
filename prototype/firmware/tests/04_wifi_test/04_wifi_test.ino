@@ -25,13 +25,22 @@
   ---------------------------
     04_wifi_test.ino  this file
     secrets.h         your WiFi name and password (never committed)
+    secrets.example.h template: copy it to secrets.h and fill it in
 */
 
 #include <WiFi.h>                // built into the esp32 package
 #include <ESPmDNS.h>             // built in: the "heartdoll.local" name
 #include <AsyncTCP.h>            // library: networking underneath the server
 #include <ESPAsyncWebServer.h>   // library: the web server
-#include "secrets.h"             // WIFI_SSID and WIFI_PASSWORD
+
+// WIFI_SSID and WIFI_PASSWORD. A fresh clone has no secrets.h yet, so it
+// builds with the placeholders in secrets.example.h until you add one.
+#if __has_include("secrets.h")
+#include "secrets.h"
+#else
+#pragma message "secrets.h not found: using the placeholders in secrets.example.h"
+#include "secrets.example.h"
+#endif
 
 // ---------------------------------------------------------------------
 // Settings

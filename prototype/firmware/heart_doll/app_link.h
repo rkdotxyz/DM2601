@@ -35,8 +35,16 @@
 #include <ESPAsyncWebServer.h>
 #include "config.h"
 #include "state_machine.h"
-#include "secrets.h"
 #include "web_page.h"
+
+// Your WiFi name and password. A fresh clone has no secrets.h yet, so it
+// builds with the placeholders in secrets.example.h until you add one.
+#if __has_include("secrets.h")
+#include "secrets.h"
+#else
+#pragma message "secrets.h not found: using the placeholders in secrets.example.h"
+#include "secrets.example.h"
+#endif
 
 AsyncWebServer appServer(80);        // the web server, normal http port
 AsyncWebSocket appSocket("/ws");     // the live link, at ws://<doll>/ws
