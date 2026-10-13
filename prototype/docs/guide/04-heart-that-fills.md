@@ -73,7 +73,7 @@ The messages are exactly the same as in Phase 3, plus `status:declined`, so `app
 |---|---|---|---|
 | `CONNECTED_LEVEL` | `config.h` | 0.60 | Doll brightness when only the phone person is available |
 | `TOGETHER_LEVEL` | `config.h` | 1.00 | Doll brightness when both are; lower it if it's too bright by the bed |
-| `PIPE_MS` | `web_page.h`, script | 700 | How long a pipe takes to draw |
+| `PIPE_MS` | `web_page.h`, script (v1.1; from v1.2 the app is in [`app/`](../../app)) | 700 | How long a pipe takes to draw |
 | `RISE_MS` / `DRIP_MS` | `web_page.h`, script | 1100 / 1500 | How long filling takes, from below / with drops |
 | `@keyframes beat` | `web_page.h`, CSS | 1 s | The full heart's beat. Keep it matching `BEAT_MS` |
 
@@ -85,4 +85,4 @@ The messages are exactly the same as in Phase 3, plus `status:declined`, so `app
 | Taps work, but nothing animates | The phone has Reduce Motion on. States still change, just without movement |
 | 60% and 100% look the same on the doll | LEDs are hard to judge directly. Look through a sheet of paper, or lower `CONNECTED_LEVEL` to 0.4 |
 
-**This is v1.1, the current version.** What comes next is in the [roadmap](../../README.md#roadmap).
+**Next:** [Phase 5](05-its-own-wifi.md) replaces this app with the 3D one, and the hotspot with the doll's own WiFi.

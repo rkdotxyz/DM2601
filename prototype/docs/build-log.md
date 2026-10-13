@@ -83,3 +83,20 @@ What happened in each phase. The step-by-step version for rebuilding it is the [
 - `secrets.h` is no longer committed. Each sketch that needs WiFi ships `secrets.example.h` and falls back to it, so a fresh clone builds.
 - Wrote the README, parts list, wiring diagram, architecture, protocol, gotchas, build guide and this log.
 - Compile-checked every sketch with Arduino IDE 2.3.10, esp32 3.3.12, Async TCP 3.5.0 and ESP Async WebServer 3.12.1. With the same `secrets.h`, the firmware builds to exactly the same size as before the move.
+
+
+## Phase 5: Its own WiFi (v1.2)
+
+**Date:** 2026-10-13
+
+**What I did**
+- Rebuilt the phone app in React and React Three Fiber ([`app/`](../app)): the doll from the customiser website, your photo in a locket, a glass heart and tubes with liquid that flows in order. Published a demo with a simulated doll on GitHub Pages.
+- The doll now makes its own WiFi with a captive portal: join it and the app opens. One phone at a time; a quiet phone is dropped after a minute.
+- The blue blink now means "no phone has the app open". After a minute with no phone, an available phone person counts as stepped away.
+- `npm run build:doll` compiles the app into `web_page.h` (about 440 KB gzipped); `npm run qr` makes the WiFi QR sticker.
+- Renumbered the roadmap: v2.0 stays the cloud relay.
+
+**Result**
+- [x] Compiles with esp32 3.3.12 and the Huge APP partition: 1.46 MB of 3 MB. Too big for the default scheme (1.3 MB), as expected
+- [ ] Captive portal, one-phone limit and step-away tested on the doll with an iPhone and an Android phone
+
