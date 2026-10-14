@@ -12,12 +12,14 @@ It's written for someone new to physical computing. Each phase adds one thing, e
 - 4-pin RGB LED and 3 × 220 Ω resistors
 - 2 tactile pushbuttons
 - Breadboard, jumper wires, a micro-USB **data** cable
-- A phone with a browser, and a 2.4 GHz WiFi network (a phone hotspot works)
+- A phone with a browser. Phases 3–4 also need a 2.4 GHz WiFi network (a phone hotspot works); from Phase 5 the doll makes its own
 
 **Software**
 
 - Arduino IDE 2.x, with the **esp32** board package by Espressif, **version 3.x**
 - Libraries: **ESP Async WebServer** and **Async TCP**, both by **ESP32Async** (Sketch → Include Library → Manage Libraries). Older libraries have nearly the same names; check the author.
+
+- From Phase 5: the **Huge APP** partition scheme (Tools → Partition Scheme), and [Node.js](https://nodejs.org) only if you change the app or make the QR sticker
 
 Compile-checked with Arduino IDE 2.3.10, esp32 3.3.12, Async TCP 3.5.0 and ESP Async WebServer 3.12.1.
 
@@ -29,8 +31,9 @@ Compile-checked with Arduino IDE 2.3.10, esp32 3.3.12, Async TCP 3.5.0 and ESP A
 | 2 | [The state machine, offline](02-state-machine-offline.md) | The doll's rules running, with Serial Monitor playing the phone | [`firmware/heart_doll`](../../firmware/heart_doll) |
 | 3 | [The phone app](03-phone-app.md) | The doll on WiFi, serving its own app, live in both directions | [`firmware/heart_doll`](../../firmware/heart_doll) |
 | 4 | [A heart that fills](04-heart-that-fills.md) | The liquid-heart app and the five-state rules (v1.1) | [`firmware/heart_doll`](../../firmware/heart_doll) |
+| 5 | [Its own WiFi](05-its-own-wifi.md) | The doll's own network with a QR sticker and captive portal, one phone at a time, and the 3D app (v1.2) | [`firmware/heart_doll`](../../firmware/heart_doll), [`app`](../../app) |
 
-Phases 2–4 all use the finished firmware. It was built up in three steps, and the guide explains each step's part of it; where an earlier version differed, the phase says how. The [build log](../build-log.md) records what happened in each phase.
+Phases 2–5 all use the finished firmware. It was built up in four steps, and the guide explains each step's part of it; where an earlier version differed, the phase says how. The [build log](../build-log.md) records what happened in each phase.
 
 ## Conventions
 

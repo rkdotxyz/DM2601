@@ -1,5 +1,5 @@
 /*
-  heart_doll.ino  -  Heart Doll firmware (v1.1: liquid heart app)
+  heart_doll.ino  -  Heart Doll firmware (v1.2: its own WiFi, the 3D app)
 
   A doll with an RGB heart and two buttons:
     Heart  -> tells the phone "I'm available";   heart breathes slowly
@@ -15,8 +15,8 @@
     state_machine.h   the rules: (state, event) -> next state
     led.h             draws patterns on the LED
     buttons.h         debounced button presses
-    app_link.h        WiFi, the web server and the WebSocket to the phone
-    web_page.h        the phone app itself (HTML, CSS, JavaScript)
+    app_link.h        the doll's WiFi, the web server and the WebSocket
+    web_page.h        the phone app, built from prototype/app (generated)
     secrets.h         your WiFi name and password (never committed)
     secrets.example.h template: copy it to secrets.h and fill it in
     heart_doll.ino    this file: turns inputs into events, applies the
@@ -34,6 +34,9 @@
 
 // The single source of truth.
 DollState state = STATE_IDLE;
+
+// When the last phone closed the app (0 while a phone has it open).
+unsigned long phoneGoneSinceMs = 0;
 
 
 // ---------------------------------------------------------------------
@@ -97,6 +100,32 @@ void handleEvent(DollEvent event) {
 
 
 // ---------------------------------------------------------------------
+// Is a phone here?
+// ---------------------------------------------------------------------
+// Blue blink while no phone has the app open. And if the phone person is
+// still "available" but no phone has been back for PHONE_GONE_MS, they've
+// gone: that counts as stepping away, so the doll doesn't keep beating for
+// nobody. Short gaps (a reload, a locked screen) change nothing.
+void checkPhone(unsigned long now) {
+  bool phoneHere = appLinkOnline() && appLinkPhones() > 0;
+  ledSetNoPhone(!phoneHere);
+
+  if (phoneHere) {
+    phoneGoneSinceMs = 0;
+    return;
+  }
+  if (phoneGoneSinceMs == 0) phoneGoneSinceMs = now ? now : 1;
+
+  bool phonePersonAvailable = (state == STATE_CONNECTED || state == STATE_DECLINED ||
+                               state == STATE_TOGETHER);
+  if (phonePersonAvailable && now - phoneGoneSinceMs >= PHONE_GONE_MS) {
+    Serial.println("No phone for a minute: the phone person has stepped away.");
+    handleEvent(EVENT_APP_UNAVAILABLE);
+  }
+}
+
+
+// ---------------------------------------------------------------------
 // setup() and loop()
 // ---------------------------------------------------------------------
 void setup() {
@@ -104,7 +133,7 @@ void setup() {
   delay(500);   // only here: let the USB serial connect
 
   Serial.println();
-  Serial.println("=== Heart Doll v1.1 - liquid heart ===");
+  Serial.println("=== Heart Doll v1.2 - its own WiFi ===");
 
   ledBegin();
   if (BOOT_COLOUR_CHECK) ledColourCheck();
@@ -127,7 +156,7 @@ void loop() {
 
   // 2. Network housekeeping (never waits).
   appLinkUpdate(now);
-  ledSetNoWifi(!appLinkOnline());   // blue blink while WiFi is down
+  checkPhone(now);
 
   // 3. Output: redraw the LED when it's time.
   ledUpdate(now);
