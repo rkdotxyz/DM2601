@@ -37,7 +37,8 @@ To use your hotspot as before, set `WIFI_MODE = WIFI_HOTSPOT` in `config.h`.
 - [ ] Every flow from [Phase 4](04-heart-that-fills.md#what-to-check) still works: Heart, Cross, tapping your photo.
 - [ ] Liquid always goes down the tube before it fills the heart, and drains from the heart before the tube.
 - [ ] A second phone can't join the WiFi while the first is on it.
-- [ ] Turn the first phone's WiFi off: the blue blink returns at once. After a minute, if that phone person was available, the doll counts them as stepped away (the heart goes back to breathing or off).
+- [ ] Available on the phone, then turn its WiFi off: within a few seconds the blue blink returns, and the phone person's heartbeat goes (the doll breathes if its person pressed Heart, otherwise it's dark). After a minute, the doll counts them as stepped away.
+- [ ] Turn the WiFi back on within the minute: the app reconnects, and the heartbeat comes back by itself.
 - [ ] The second phone can now join, and the app opens.
 
 ## Tuning

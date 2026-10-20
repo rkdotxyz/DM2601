@@ -19,7 +19,7 @@ Built as the prototype for DM2601 at KTH, exploring pre-sleep rituals for people
 - **Its own WiFi:** the doll makes a network, "HeartDoll". Scan the QR sticker, and the app pops up by itself (a captive portal, like hotel WiFi). Or join your hotspot, as before, with one setting.
 - **One phone at a time:** a second phone can't join while someone has the doll. When they leave, the next person scans and joins.
 - **Always in sync:** the doll holds the one true state. A page opened late or reloaded shows the same thing.
-- **Clear feedback:** a white flash for every button press, a blue blink while no phone has the app open, "Can't reach the doll" on the phone. Both reconnect by themselves. A phone gone for a minute counts as stepping away.
+- **Clear feedback:** a white flash for every button press, a blue blink while no phone has the app open, "Can't reach the doll" on the phone. Both reconnect by themselves. While the phone is gone, its heartbeat goes from the doll at once; gone for a minute counts as stepping away.
 
 ## How it works
 
@@ -88,7 +88,7 @@ Compile-checked with Arduino IDE 2.3.10, esp32 3.3.12, Async TCP 3.5.0 and ESP A
 5. Both available: the heart on the phone is full and beating, and the doll's heartbeat is at full brightness.
 6. **Handing over:** the doll takes one phone at a time. Turn your phone's WiFi off, or "Forget" the network, and the next person can scan. A phone that just walks away is dropped after a minute, and then counts as stepped away.
 
-No phone handy? Type `a` (available) or `u` (unavailable) in Serial Monitor to play the phone. (With no phone connected, the doll sets you back to unavailable after a minute.)
+No phone handy? Type `a` (available) or `u` (unavailable) in Serial Monitor to play the phone, and watch the state change there. The LED won't show the phone person's heartbeat while no phone has the app open, and after a minute the doll sets them back to unavailable.
 
 <!-- When screenshots are ready, add:
 <img src="docs/media/app-half.png" width="260" alt="Heart half full"> <img src="docs/media/app-full.png" width="260" alt="Heart full">

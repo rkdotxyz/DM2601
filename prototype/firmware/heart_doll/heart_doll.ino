@@ -35,7 +35,9 @@
 // The single source of truth.
 DollState state = STATE_IDLE;
 
-// When the last phone closed the app (0 while a phone has it open).
+// Is a phone here, with the app open? And since when has it been gone
+// (0 while a phone has it open)?
+bool          phoneHere        = false;
 unsigned long phoneGoneSinceMs = 0;
 
 
@@ -43,8 +45,13 @@ unsigned long phoneGoneSinceMs = 0;
 // Effects: what each state looks like, and what the phone is told
 // ---------------------------------------------------------------------
 
-// Each state has exactly one LED pattern.
+// Each state has exactly one LED pattern. While no phone is here, the LED
+// shows the state as if the phone person had stepped away (the rules
+// themselves say what that is): their heartbeat goes, and only the doll
+// person's own breathing is left. The state itself is kept, so a phone
+// that's back within PHONE_GONE_MS picks up where it left off.
 void showState(DollState s) {
+  if (!phoneHere) s = nextState(s, EVENT_APP_UNAVAILABLE);
   switch (s) {
     case STATE_IDLE:      ledSetPattern(PATTERN_OFF);       break;
     case STATE_WAITING:   ledSetPattern(PATTERN_BREATHING); break;
@@ -102,12 +109,18 @@ void handleEvent(DollEvent event) {
 // ---------------------------------------------------------------------
 // Is a phone here?
 // ---------------------------------------------------------------------
-// Blue blink while no phone has the app open. And if the phone person is
-// still "available" but no phone has been back for PHONE_GONE_MS, they've
-// gone: that counts as stepping away, so the doll doesn't keep beating for
-// nobody. Short gaps (a reload, a locked screen) change nothing.
+// Blue blink while no phone has the app open, and no heartbeat for a phone
+// person who isn't there (see showState()). If no phone has been back for
+// PHONE_GONE_MS, they've gone for good: that counts as stepping away, and
+// the state changes too. Shorter gaps (a reload, a locked screen) only
+// change the LED until the phone is back.
 void checkPhone(unsigned long now) {
-  bool phoneHere = appLinkOnline() && appLinkPhones() > 0;
+  bool here = appLinkOnline() && appLinkPhones() > 0;
+  if (here != phoneHere) {
+    phoneHere = here;
+    Serial.println(here ? "A phone has the app open." : "No phone has the app open.");
+    showState(state);   // with or without the phone person's heartbeat
+  }
   ledSetNoPhone(!phoneHere);
 
   if (phoneHere) {
