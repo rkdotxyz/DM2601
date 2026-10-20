@@ -97,6 +97,12 @@ const int MAX_PHONES = 1;
 // frees its place. The ESP32 allows 10 or more.
 const uint16_t WIFI_IDLE_DROP_S = 60;
 
+// A phone can vanish without closing the app (WiFi switched off, out of
+// range). The doll pings the app every PHONE_PING_S when it's quiet, and
+// closes a connection that hasn't answered for PHONE_SILENT_S.
+const uint16_t PHONE_PING_S   = 2;
+const uint16_t PHONE_SILENT_S = 6;
+
 // When no phone has had the app open for this long, the phone person has
 // stepped away: the doll treats it as "unavailable". Shorter gaps (a
 // reload, a locked screen, a WiFi blip) change nothing.

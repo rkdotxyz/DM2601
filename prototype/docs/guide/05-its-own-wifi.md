@@ -47,6 +47,7 @@ To use your hotspot as before, set `WIFI_MODE = WIFI_HOTSPOT` in `config.h`.
 | `WIFI_MODE` | `config.h` | `WIFI_OWN_NETWORK` | The doll's own WiFi, or `WIFI_HOTSPOT` to join yours |
 | `MAX_PHONES` | `config.h` | 1 | Phones allowed at once (1–4) |
 | `WIFI_IDLE_DROP_S` | `config.h` | 60 | Seconds before a quiet phone is dropped from the doll's WiFi |
+| `PHONE_PING_S` / `PHONE_SILENT_S` | `config.h` | 2 / 6 | How often the doll checks a quiet app connection, and how long without an answer before it counts the phone as gone (blue blink) |
 | `PHONE_GONE_MS` | `config.h` | 60000 | How long without a phone before the phone person counts as stepped away |
 | `DOLL_WIFI_CHANNEL` | `config.h` | 6 | Try 1 or 11 if the network is crowded |
 

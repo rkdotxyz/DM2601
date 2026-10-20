@@ -26,7 +26,9 @@
   One phone at a time
   -------------------
   On its own network the doll lets MAX_PHONES phones join its WiFi, and
-  drops a phone that has gone quiet for WIFI_IDLE_DROP_S. In both modes it
+  drops a phone that has gone quiet for WIFI_IDLE_DROP_S. An app
+  connection whose phone has vanished is closed when the phone leaves the
+  WiFi, or when it stops answering pings for PHONE_SILENT_S. In both modes it
   keeps MAX_PHONES app connections: a reload from the same phone replaces
   its old connection, and anyone else is sent "link:busy" and closed.
 
@@ -137,6 +139,12 @@ void appLinkOnSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client,
       Serial.println("Another phone tried to connect: sent link:busy.");
       return;
     }
+    // Notice a phone that vanishes without closing (WiFi off, out of
+    // range): ping it when it's quiet, and close the connection if it
+    // stops answering. Browsers answer pings by themselves.
+    client->keepAlivePeriod(PHONE_PING_S);
+    client->client()->setRxTimeout(PHONE_SILENT_S);
+
     // Tell the phone the current state straight away. Status is re-sent
     // like this; one-off events (button presses) are not.
     client->text(status);
@@ -274,6 +282,19 @@ void appLinkBegin() {
   appLinkPrintHelp();
 }
 
+// Forget and close every app connection.
+void appLinkCloseAll() {
+  uint32_t ids[APP_MAX_LINKS];
+  int n;
+  portENTER_CRITICAL(&appLinkLock);
+  n = appLinkCount;
+  for (int i = 0; i < n; i++) ids[i] = appLinks[i];
+  appLinkCount = 0;
+  portEXIT_CRITICAL(&appLinkLock);
+  for (int i = 0; i < n; i++) appSocket.close(ids[i]);
+  if (n > 0) Serial.println("Phone gone: its connection is closed.");
+}
+
 bool appLinkOnline() {
   if (WIFI_MODE == WIFI_OWN_NETWORK) return appServerStarted;
   return WiFi.status() == WL_CONNECTED;
@@ -296,8 +317,14 @@ void appLinkUpdate(unsigned long now) {
     if (stations != appLastStations) {
       if (appLastStations >= 0 && stations > appLastStations) Serial.println("A phone joined the doll's WiFi.");
       if (stations < appLastStations) Serial.println("A phone left the doll's WiFi.");
-      // Nobody on the network: the next phone to join gets the pop-up again.
-      if (stations == 0) appSignedIn = false;
+      if (stations == 0) {
+        // Nobody on the network: the next phone to join gets the pop-up again.
+        appSignedIn = false;
+        // And any app connection left over is from a phone that has gone
+        // (switching WiFi off doesn't always close it): close it now, so
+        // the doll knows at once that no phone is here.
+        appLinkCloseAll();
+      }
       appLastStations = stations;
     }
   } else {

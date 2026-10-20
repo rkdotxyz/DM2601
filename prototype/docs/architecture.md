@@ -146,6 +146,7 @@ With `WIFI_MODE = WIFI_OWN_NETWORK`, `app_link.h` makes the doll an access point
 - **One phone.** `WiFi.softAP()` takes the most phones allowed to join (`MAX_PHONES`), and `esp_wifi_set_inactive_time()` drops a phone that has gone quiet (`WIFI_IDLE_DROP_S`), so a phone that walks away frees its place.
 - **A captive portal.** A small DNS server answers every name with the doll, and the web server answers the phone's "am I online?" checks with a redirect to the app, until the app has opened. The [protocol](protocol.md#reaching-the-doll) lists the checks.
 - **One app connection.** The WebSocket keeps a short list of accepted connections. A new one from the same phone replaces the old (a reload); one from anyone else gets `link:busy`.
+- **A phone that vanishes.** Switching WiFi off doesn't always close the app's connection: the phone just stops answering. So the doll pings a quiet connection every `PHONE_PING_S` and closes it after `PHONE_SILENT_S` without an answer, and on its own network it closes every app connection as soon as no phone is left on its WiFi.
 - **Has the phone gone?** `checkPhone()` in `heart_doll.ino` blinks blue while no phone has the app open. If the phone person is still available after `PHONE_GONE_MS` with no phone, it sends the phone's "unavailable" through `handleEvent()`, like any other input.
 
 ## Settings
