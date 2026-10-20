@@ -22,11 +22,13 @@ export const TUBE_THEM = new THREE.CatmullRomCurve3([
   new THREE.Vector3(0, HEART_POS.y + HEART_NOTCH_Y - 0.1, 0),
 ], false, "catmullrom", 0.5);
 
+// Your tube leaves the left edge of your pedestal and curves round the
+// left of the locket, so it never passes behind your photo.
 export const TUBE_YOU = new THREE.CatmullRomCurve3([
-  new THREE.Vector3(0, YOU_DISC.y + 0.02, -DISC_R + 0.06),
-  new THREE.Vector3(0, YOU_DISC.y + 0.3, -DISC_R - 0.02),
-  new THREE.Vector3(-0.3, -1.75, -0.3),
-  new THREE.Vector3(0.24, -1.42, -0.14),
-  new THREE.Vector3(0.0, HEART_POS.y + HEART_TIP_Y - 0.22, 0.0),
+  new THREE.Vector3(-DISC_R * 0.82, YOU_DISC.y + 0.02, -0.12),
+  new THREE.Vector3(-0.66, YOU_DISC.y + 0.24, -0.16),
+  new THREE.Vector3(-0.84, -1.72, -0.12),
+  new THREE.Vector3(-0.76, -1.22, -0.06),
+  new THREE.Vector3(-0.36, -0.98, 0.0),
   new THREE.Vector3(0, HEART_POS.y + HEART_TIP_Y + 0.12, 0),
-], false, "catmullrom", 0.5);
+], false, "catmullrom", 0.5)
