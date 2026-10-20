@@ -1,7 +1,7 @@
 // A person on a glass disc: the doll person is the Heart Doll itself, and
 // you are your photo in a floating locket. Dim when away; warm and lit when
 // here. You can tap yourself; the doll hops when its Heart is pressed.
-import { useRef, useState, type RefObject } from "react";
+import { useMemo, useRef, useState, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { DISC_R } from "./layout";
@@ -10,8 +10,10 @@ import { Portrait } from "./Portrait";
 import type { Person } from "./flow";
 import type { World } from "./world";
 
-const RING_OFF = new THREE.Color("#3a2a31");
 const RING_ON = new THREE.Color("#ff3b63");
+// The pedestals: matte porcelain, in the website's colours.
+const DISC = "#f6f1ec";
+const RING_OFF = new THREE.Color("#e2d9d2");
 
 type Props = {
   person: Person;
@@ -21,6 +23,7 @@ type Props = {
 };
 
 export function Figure({ person, position, world, onTap }: Props) {
+  const shadow = useMemo(shadowTexture, []);
   const fig = useRef<THREE.Group>(null);
   const on = useRef(0); // 0 away .. 1 here, eased; the doll and the locket read it
   const ring = useRef<THREE.MeshStandardMaterial>(null);
@@ -91,10 +94,15 @@ export function Figure({ person, position, world, onTap }: Props) {
 
   return (
     <group position={position} scale={1.18}>
+      {/* a soft shadow under the disc, like the doll's on the website */}
+      <mesh position={[0, -0.085, 0.04]} rotation={[-Math.PI / 2, 0, 0]} scale={[DISC_R * 3.1, DISC_R * 2.4, 1]} raycast={() => null}>
+        <planeGeometry />
+        <meshBasicMaterial map={shadow} transparent opacity={0.38} depthWrite={false} toneMapped={false} />
+      </mesh>
       {/* the disc */}
       <mesh position={[0, -0.04, 0]}>
         <cylinderGeometry args={[DISC_R, DISC_R * 1.04, 0.08, 64]} />
-        <meshPhysicalMaterial color="#2a1c22" roughness={0.3} clearcoat={1} clearcoatRoughness={0.12} envMapIntensity={1.2} />
+        <meshPhysicalMaterial color={DISC} roughness={0.65} sheen={0.4} sheenColor="#ffffff" envMapIntensity={0.6} />
       </mesh>
       <mesh position={[0, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <torusGeometry args={[DISC_R - 0.035, 0.012, 12, 96]} />
@@ -129,4 +137,18 @@ export function Figure({ person, position, world, onTap }: Props) {
       )}
     </group>
   );
+}
+
+/** A soft round shadow: a blurred disc, from website/src/doll/GroundShadow.tsx. */
+function shadowTexture() {
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const ctx = c.getContext("2d")!;
+  const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  g.addColorStop(0, "rgba(40,30,30,0.9)");
+  g.addColorStop(0.45, "rgba(40,30,30,0.55)");
+  g.addColorStop(1, "rgba(40,30,30,0)");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
 }

@@ -74,10 +74,10 @@ function HeartPatch() {
   const light = useRef<THREE.PointLight>(null)
   const p = surfacePoint(0, FACE.heartY)
   useFrame(() => {
-    const { them, you, night } = useDoll.getState()
+    const { them, you } = useDoll.getState()
     const level = heartLevel(dollState(them, you), performance.now())
-    if (material.current) material.current.emissiveIntensity = level * (night ? 4.5 : 3.2)
-    if (light.current) light.current.intensity = level * (night ? 2.2 : 1.2)
+    if (material.current) material.current.emissiveIntensity = level * 3.2
+    if (light.current) light.current.intensity = level * 1.2
   })
   return (
     <>

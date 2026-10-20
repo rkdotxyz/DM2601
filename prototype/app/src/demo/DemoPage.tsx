@@ -29,20 +29,29 @@ export function DemoPage({ link, doll }: { link: DollLink; doll: SimulatedDoll }
 
   return (
     <div className="demo-wide">
-      <div className="demo-intro">
-        <div className="eyebrow">DM2601 · Group 11 · Interactive demo</div>
-        <h1>Heart Doll</h1>
-        <p>
-          A doll whose heart glows when someone far away is there for you. One person has the
-          doll; the other has this app. When you're both available, the heart fills and beats,
-          on the phone and in the doll.
-        </p>
-        <a className="repo" href="https://github.com/rkdotxyz/DM2601/tree/main/prototype">How it's built →</a>
-      </div>
-      <div className="device">
-        <div className="device-screen"><PhoneApp link={link} simulated /></div>
-      </div>
-      <DollPanel doll={doll} />
+      <main className="demo-stage">
+        <div className="device">
+          <div className="device-screen"><PhoneApp link={link} simulated /></div>
+        </div>
+      </main>
+      <aside className="demo-panel">
+        <div className="panel-head">
+          <p className="eyebrow">DM2601 · Group 11 · Interactive demo</p>
+          <h1>Heart Doll</h1>
+          <p className="lede">
+            A doll whose heart glows when someone far away is there for you. One person has the
+            doll; the other has this app. When you're both available, the heart fills and beats,
+            on the phone and in the doll.
+          </p>
+        </div>
+        <div className="panel-body">
+          <DollPanel doll={doll} />
+          <p className="links">
+            <a href="../website/">Customise the doll →</a>
+            <a href="https://github.com/rkdotxyz/DM2601/tree/main/prototype">How it's built →</a>
+          </p>
+        </div>
+      </aside>
     </div>
   );
 }

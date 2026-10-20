@@ -18,7 +18,7 @@ Pitfalls worth knowing before you start. Some were hit during this build; the re
 - **Network messages arrive on another task.** Don't act on a WebSocket message inside its handler. Park it, and let `loop()` pick it up (see [architecture](architecture.md#two-tasks-one-decision-maker)).
 - **Custom types in function signatures need a header.** Functions that take `DollState` compile because the enum lives in `state_machine.h`, included at the top of the `.ino`. Defined further down an `.ino`, the IDE's auto-generated prototypes break on it.
 - **`secrets.h` missing.** A fresh clone builds with the placeholders in `secrets.example.h` and prints a note while compiling. The doll's network then uses the example's name and password, which anyone reading the repo knows. Copy the example to `secrets.h` and choose your own.
-- **"Sketch too big".** The 3D app needs **Tools → Partition Scheme → Huge APP (3MB No OTA/1MB SPIFFS)**. The default scheme has room for about 1.3 MB; the sketch is about 1.46 MB.
+- **"Sketch too big".** The 3D app needs **Tools → Partition Scheme → Huge APP (3MB No OTA/1MB SPIFFS)**. The default scheme has room for about 1.3 MB; the sketch is about 1.5 MB.
 - **Changed the app, but the doll shows the old one?** The doll serves `web_page.h`, which is only rewritten by `npm run build:doll` in `prototype/app`. Run it, then upload again.
 
 ## The doll's own WiFi

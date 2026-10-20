@@ -80,19 +80,17 @@ function Fabric({ colour, repeat = [4, 4] as [number, number] }: { colour: strin
   return <meshPhysicalMaterial map={weaveTexture(colour, repeat)} roughness={0.95} sheen={0.6} sheenColor="#ffffff" />
 }
 
-/** A lamp's light: soft by day, the main light at night. */
-function LampLight({ position, colour = '#ffcf8a', day = 0.8, night = 9 }: { position: [number, number, number]; colour?: string; day?: number; night?: number }) {
-  const isNight = useDoll((s) => s.night)
-  return <pointLight position={position} color={colour} intensity={isNight ? night : day} distance={14} decay={1.6} />
+/** A lamp's soft light. */
+function LampLight({ position, colour = '#ffcf8a', intensity = 0.8 }: { position: [number, number, number]; colour?: string; intensity?: number }) {
+  return <pointLight position={position} color={colour} intensity={intensity} distance={14} decay={1.6} />
 }
 
-/** A lampshade that glows when the lamp is on at night. */
+/** A lampshade, faintly lit. */
 function Shade({ top, bottom, height, colour }: { top: number; bottom: number; height: number; colour: string }) {
-  const night = useDoll((s) => s.night)
   return (
     <mesh>
       <cylinderGeometry args={[top, bottom, height, 40, 1, true]} />
-      <meshStandardMaterial color={colour} emissive="#ffc77a" emissiveIntensity={night ? 1.6 : 0.15} side={THREE.DoubleSide} roughness={0.9} />
+      <meshStandardMaterial color={colour} emissive="#ffc77a" emissiveIntensity={0.15} side={THREE.DoubleSide} roughness={0.9} />
     </mesh>
   )
 }
@@ -197,7 +195,6 @@ function Bedside() {
 }
 
 function Bed() {
-  const night = useDoll((s) => s.night)
   return (
     <group>
       <Room floorY={-3.2} back={-5.9} wall="#dfe6ee" floor={woodTexture('#b08860', '#5a3a22', [3, 6])} />
@@ -224,9 +221,9 @@ function Bed() {
       {/* a wall light */}
       <mesh position={[5.5, 4.2, -5.8]}>
         <sphereGeometry args={[0.35, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
-        <meshStandardMaterial color="#f4ead8" emissive="#ffc77a" emissiveIntensity={night ? 2 : 0.2} side={THREE.DoubleSide} />
+        <meshStandardMaterial color="#f4ead8" emissive="#ffc77a" emissiveIntensity={0.2} side={THREE.DoubleSide} />
       </mesh>
-      <LampLight position={[5.5, 4, -5]} night={7} />
+      <LampLight position={[5.5, 4, -5]} />
     </group>
   )
 }
@@ -248,7 +245,6 @@ function Curtain({ x, colour }: { x: number; colour: string }) {
 }
 
 function WindowSill() {
-  const night = useDoll((s) => s.night)
   const wallMap = wallTexture('#eee7dd')
   const wall = <meshStandardMaterial map={wallMap} roughness={0.95} />
   const back = -1.35
@@ -296,7 +292,7 @@ function WindowSill() {
       {/* the view: a big sky far behind, so it shifts naturally as you orbit */}
       <mesh position={[0, 6.5, -12]}>
         <planeGeometry args={[34, 22]} />
-        <meshBasicMaterial map={skyTexture(night)} toneMapped={false} />
+        <meshBasicMaterial map={skyTexture(false)} toneMapped={false} />
       </mesh>
       {/* the sill */}
       <RoundedBox args={[10, 0.35, 2.6]} radius={0.06} position={[0, -0.175, -0.05]}>
@@ -305,7 +301,7 @@ function WindowSill() {
       <Curtain x={-5.1} colour="#e6b7a9" />
       <Curtain x={5.1} colour="#e6b7a9" />
       <Plant position={[2.25, 0, -0.4]} scale={0.75} />
-      <directionalLight position={[0, 6, -10]} intensity={night ? 0.25 : 1.4} color={night ? '#8fa2ff' : '#fff1dc'} />
+      <directionalLight position={[0, 6, -10]} intensity={1.4} color="#fff1dc" />
     </group>
   )
 }
@@ -375,7 +371,6 @@ function DeskLamp({ position }: { position: [number, number, number] }) {
 }
 
 function Desk() {
-  const night = useDoll((s) => s.night)
   return (
     <group>
       <Room floorY={-4.8} back={-3.4} wall="#e4e9e1" floor={woodTexture('#9c7350', '#5a3a22', [3, 6])} />
@@ -393,7 +388,7 @@ function Desk() {
           </RoundedBox>
           <mesh position={[0, 0.92, 0.035]}>
             <planeGeometry args={[2.55, 1.55]} />
-            <meshStandardMaterial color="#1d2433" emissive="#8fb4ff" emissiveIntensity={night ? 0.7 : 0.25} />
+            <meshStandardMaterial color="#1d2433" emissive="#8fb4ff" emissiveIntensity={0.25} />
           </mesh>
         </group>
       </group>
@@ -424,7 +419,7 @@ function Desk() {
         <meshStandardMaterial color="#355c7d" roughness={0.8} />
       </mesh>
       <DeskLamp position={[-4.7, 0, -1.8]} />
-      <LampLight position={[-3.1, 2.4, -1.8]} night={8} />
+      <LampLight position={[-3.1, 2.4, -1.8]} />
     </group>
   )
 }
@@ -483,7 +478,7 @@ function Sofa() {
           <Shade top={0.7} bottom={1.1} height={1.2} colour="#f3e6d2" />
         </group>
       </group>
-      <LampLight position={[7.3, 4, -2.4]} night={10} />
+      <LampLight position={[7.3, 4, -2.4]} />
     </group>
   )
 }

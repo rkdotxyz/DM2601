@@ -74,9 +74,9 @@ const fragment = /* glsl */ `
     vec3 key = normalize(vec3(-0.4, 0.8, 0.6));
     float diff = 0.55 + 0.45 * max(dot(n, key), 0.0);
     float rim = pow(1.0 - max(dot(n, v), 0.0), 2.5);
-    col = col * diff + uTop * rim * 0.55;
+    col = col * diff + uTop * rim * 0.35;
     float spec = pow(max(dot(reflect(-key, n), v), 0.0), 40.0);
-    col += vec3(1.0, 0.9, 0.92) * spec * 0.35;
+    col += vec3(1.0, 0.9, 0.92) * spec * 0.12;
     col *= 1.0 + uGlow * 0.45;
     gl_FragColor = vec4(col, 1.0);
     #include <colorspace_fragment>
@@ -91,9 +91,9 @@ export function createLiquidMaterial() {
     uRipple: { value: 0 },
     uTime: { value: 0 },
     uGlow: { value: 0 },
-    uDeep: { value: new THREE.Color("#3d0010") },
-    uMid: { value: new THREE.Color("#b3112f") },
-    uTop: { value: new THREE.Color("#ff5574") },
+    uDeep: { value: new THREE.Color("#6e1428") },
+    uMid: { value: new THREE.Color("#c8324c") },
+    uTop: { value: new THREE.Color("#ec7a8e") },
   };
   const material = new THREE.ShaderMaterial({
     uniforms,
@@ -168,9 +168,9 @@ export function createTubeLiquidMaterial() {
     uFlow: { value: 0 },
     uTime: { value: 0 },
     uGlow: { value: 0 },
-    uDeep: { value: new THREE.Color("#4a0414") },
-    uMid: { value: new THREE.Color("#c0153a") },
-    uTop: { value: new THREE.Color("#ff6a85") },
+    uDeep: { value: new THREE.Color("#7a1a2e") },
+    uMid: { value: new THREE.Color("#c8324c") },
+    uTop: { value: new THREE.Color("#ee8496") },
   };
   const material = new THREE.ShaderMaterial({ uniforms, vertexShader: tubeVertex, fragmentShader: tubeFragment });
   return { material, uniforms };

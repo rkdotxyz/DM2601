@@ -93,7 +93,7 @@ What happened in each phase. The step-by-step version for rebuilding it is the [
 - Rebuilt the phone app in React and React Three Fiber ([`app/`](../app)): the doll from the customiser website, your photo in a locket, a glass heart and tubes with liquid that flows in order. Published a demo with a simulated doll on GitHub Pages.
 - The doll now makes its own WiFi with a captive portal: join it and the app opens. One phone at a time; a quiet phone is dropped after a minute.
 - The blue blink now means "no phone has the app open". After a minute with no phone, an available phone person counts as stepped away.
-- `npm run build:doll` compiles the app into `web_page.h` (about 440 KB gzipped); `npm run qr` makes the WiFi QR sticker.
+- `npm run build:doll` compiles the app into `web_page.h` (about 490 KB gzipped); `npm run qr` makes the WiFi QR sticker.
 - Renumbered the roadmap: v2.0 stays the cloud relay.
 
 **Result**

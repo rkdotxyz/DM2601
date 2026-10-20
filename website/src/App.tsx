@@ -3,6 +3,7 @@ import { Panel } from './ui/Panel'
 import { useEffect, useRef, useState } from 'react'
 import { useDoll } from './store'
 import { PLACES, placeInfo } from './places/list'
+import { MusicButton } from './ui/Music'
 
 const HINTS: Record<string, string> = {
   stickers: 'Tap the doll to place a sticker',
@@ -27,8 +28,6 @@ function Icon({ d }: { d: string }) {
 }
 
 const ICONS = {
-  sun: 'M12 4V2M12 22v-2M4 12H2M22 12h-2M5.6 5.6 4.2 4.2M19.8 19.8l-1.4-1.4M5.6 18.4l-1.4 1.4M19.8 4.2l-1.4 1.4M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z',
-  moon: 'M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z',
   save: 'M12 3v12M7 10l5 5 5-5M5 21h14',
   reset: 'M4 4v6h6M4.5 15a8 8 0 1 0 1.9-8.3L4 10',
   left: 'M15 6l-6 6 6 6',
@@ -93,16 +92,14 @@ function PlacePicker() {
 }
 
 export default function App() {
-  const { night, setNight, tab, reset } = useDoll()
+  const { tab, reset } = useDoll()
   const hint = HINTS[tab]
   return (
-    <div className="app" data-night={night}>
+    <div className="app">
       <main className="stage">
         <Scene />
         <div className="toolbar">
-          <button type="button" className="icon-button" onClick={() => setNight(!night)} aria-label={night ? 'Switch to day' : 'Switch to night'} title={night ? 'Day' : 'Night'}>
-            <Icon d={night ? ICONS.sun : ICONS.moon} />
-          </button>
+          <MusicButton />
           <button type="button" className="icon-button" onClick={saveImage} aria-label="Save an image" title="Save image">
             <Icon d={ICONS.save} />
           </button>

@@ -23,7 +23,7 @@ appDns.start(53, "*", APP_DOLL_IP);   // every name -> the doll
 ## Steps
 
 1. In `firmware/heart_doll/secrets.h` (copy it from `secrets.example.h` if you don't have one), choose `DOLL_WIFI_NAME` and `DOLL_WIFI_PASSWORD`. The password needs at least 8 characters.
-2. In Arduino IDE: **Tools → Partition Scheme → Huge APP (3MB No OTA/1MB SPIFFS)**. The app is about 440 KB, and the default scheme leaves too little room.
+2. In Arduino IDE: **Tools → Partition Scheme → Huge APP (3MB No OTA/1MB SPIFFS)**. The app is about 490 KB, and the default scheme leaves too little room.
 3. Upload. Serial Monitor prints `The doll's WiFi is on: HeartDoll`, and the LED blinks blue: no phone yet.
 4. On your phone, join "HeartDoll" (in WiFi settings, or with the QR sticker below). The app pops up. On an iPhone, wait for the button at the top to say **Done**, then tap it.
 5. Make the QR sticker (needs [Node.js](https://nodejs.org)): in `prototype/app`, run `npm install`, then `npm run qr`. Print `qr/sticker.html` at 100%.
@@ -59,7 +59,7 @@ To use your hotspot as before, set `WIFI_MODE = WIFI_HOTSPOT` in `config.h`.
 | "Sketch too big" when uploading | Choose the Huge APP partition scheme (step 2) |
 | No "HeartDoll" network appears | Check Serial Monitor. "couldn't start the doll's WiFi" means the password is shorter than 8 characters |
 | The app doesn't pop up | Some phones skip the check. Open `http://192.168.4.1` |
-| iPhone pop-up only shows Cancel | The app is still loading (about 440 KB), so wait a moment. If it stays on Cancel, don't tap it (that leaves the network): swipe home, stay on HeartDoll, and open `http://192.168.4.1` in Safari |
+| iPhone pop-up only shows Cancel | The app is still loading (about 490 KB), so wait a moment. If it stays on Cancel, don't tap it (that leaves the network): swipe home, stay on HeartDoll, and open `http://192.168.4.1` in Safari |
 | Android asks "Stay connected?" | Tap yes. The doll's network has no internet, on purpose |
 | "Someone else is with the doll" | Another phone has it. When it leaves, you join by yourself |
 | The doll still shows the old app | Run `npm run build:doll` in `prototype/app`, then upload again |

@@ -22,10 +22,9 @@ function ResponsiveFov() {
 }
 
 export function Scene() {
-  const night = useDoll((s) => s.night)
   const place = useDoll((s) => s.place)
   const azimuth = placeInfo(place).azimuth
-  const background = night ? '#151827' : '#efe9e3'
+  const background = '#efe9e3'
 
   return (
     <Canvas
@@ -36,25 +35,25 @@ export function Scene() {
     >
       <color attach="background" args={[background]} />
 
-      <ambientLight intensity={night ? 0.12 : 0.45} />
+      <ambientLight intensity={0.45} />
       <directionalLight
         position={[2.5, 4, 3]}
-        intensity={night ? 0.35 : 1.6}
-        color={night ? '#9fb0ff' : '#fff4e8'}
+        intensity={1.6}
+        color="#fff4e8"
       />
-      <directionalLight position={[-3, 2, -2]} intensity={night ? 0.15 : 0.5} color="#dfe8ff" />
+      <directionalLight position={[-3, 2, -2]} intensity={0.5} color="#dfe8ff" />
       {/* soft studio reflections, built here so nothing is downloaded */}
       <Environment resolution={128}>
-        <Lightformer form="rect" intensity={night ? 0.3 : 1.6} position={[0, 4, 2]} scale={[6, 2, 1]} />
-        <Lightformer form="rect" intensity={night ? 0.15 : 0.8} position={[-4, 1, 1]} scale={[2, 4, 1]} />
-        <Lightformer form="rect" intensity={night ? 0.15 : 0.6} position={[4, 1, -1]} scale={[2, 4, 1]} />
+        <Lightformer form="rect" intensity={1.6} position={[0, 4, 2]} scale={[6, 2, 1]} />
+        <Lightformer form="rect" intensity={0.8} position={[-4, 1, 1]} scale={[2, 4, 1]} />
+        <Lightformer form="rect" intensity={0.6} position={[4, 1, -1]} scale={[2, 4, 1]} />
       </Environment>
 
       <ResponsiveFov />
       <Doll />
       <Places />
 
-      <GroundShadow opacity={night ? 0.7 : 0.5} />
+      <GroundShadow opacity={0.5} />
 
       <OrbitControls
         makeDefault
@@ -69,7 +68,7 @@ export function Scene() {
       />
 
       <EffectComposer multisampling={4}>
-        <Bloom mipmapBlur intensity={night ? 1.1 : 0.55} radius={0.6} luminanceThreshold={1} luminanceSmoothing={0.25} />
+        <Bloom mipmapBlur intensity={0.55} radius={0.6} luminanceThreshold={1} luminanceSmoothing={0.25} />
       </EffectComposer>
     </Canvas>
   )

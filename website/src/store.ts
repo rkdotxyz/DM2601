@@ -39,7 +39,6 @@ interface DollState {
    */
   them: boolean
   you: boolean
-  night: boolean
   /** Where the doll is sitting. */
   place: Place
 
@@ -60,7 +59,6 @@ interface DollState {
   clearPaint: () => void
   setThem: (on: boolean) => void
   setYou: (on: boolean) => void
-  setNight: (on: boolean) => void
   setPlace: (place: Place) => void
   reset: () => void
 }
@@ -87,7 +85,6 @@ export const useDoll = create<DollState>((set) => ({
   eraser: false,
   paintVersion: 0,
   hasPaint: false,
-  night: false,
   place: 'studio',
 
   setTab: (tab) => set({ tab }),
@@ -114,7 +111,6 @@ export const useDoll = create<DollState>((set) => ({
   clearPaint: () => set((s) => ({ paintVersion: s.paintVersion + 1, hasPaint: false })),
   setThem: (them) => set({ them }),
   setYou: (you) => set({ you }),
-  setNight: (night) => set({ night }),
   setPlace: (place) => set({ place }),
   reset: () => set((s) => ({ ...initial, paintVersion: s.paintVersion + 1, hasPaint: false })),
 }))

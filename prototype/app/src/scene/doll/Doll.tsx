@@ -1,5 +1,5 @@
 // The doll person: the Heart Doll itself, the same knitted body as in the
-// customiser website, lit for the night scene. Its fabric heart glows
+// customiser website, in the same soft studio light. Its fabric heart glows
 // exactly like the real doll's LED for the current state.
 import { useMemo, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
@@ -11,8 +11,10 @@ import { heartLevel } from "./heartbeat";
 import type { World } from "../world";
 
 const noRaycast = () => null;
-const AWAY = new THREE.Color("#5d5856"); //  the grey fabric, in shadow
-const HERE = new THREE.Color("#c9c4bf"); //  the same fabric, lit
+// The customiser's heather-grey fabric: dimmed while the doll person is
+// away, its true colour when they're here.
+const AWAY = new THREE.Color("#a09e9c");
+const HERE = new THREE.Color("#bdbbb9");
 
 export function Doll({ world, on }: { world: RefObject<World>; on: RefObject<number> }) {
   const geometry = useMemo(createBodyGeometry, []);

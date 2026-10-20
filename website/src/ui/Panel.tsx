@@ -216,7 +216,7 @@ function SketchTab() {
 }
 
 function HeartTab() {
-  const { them, you, setThem, setYou, night } = useDoll()
+  const { them, you, setThem, setYou } = useDoll()
   const state = STATES[dollState(them, you)]
   return (
     <section>
@@ -233,7 +233,6 @@ function HeartTab() {
         <span>{state.light}</span>
         <span className="option-note">{state.why}</span>
       </div>
-      {!night && <p className="hint">Tip: switch to night with the moon button to see the glow as it looks by the bed.</p>}
     </section>
   )
 }

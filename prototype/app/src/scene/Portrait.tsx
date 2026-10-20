@@ -1,4 +1,4 @@
-// You: your photo in a floating rose-gold locket. Faded
+// You: your photo in a floating locket with a soft blush-porcelain frame. Faded
 // and cool while you're away; warm, full colour and ringed with light
 // when you're here.
 import { useEffect, useMemo, useRef, type RefObject } from "react";
@@ -81,14 +81,14 @@ export function Portrait({ world, on }: { world: RefObject<World>; on: RefObject
         <torusGeometry args={[R + 0.07, 0.014, 12, 96]} />
         <meshStandardMaterial ref={halo} color="#3a2026" emissive="#ff3b63" emissiveIntensity={0} toneMapped={false} />
       </mesh>
-      {/* the locket: a rose-gold back and rim */}
+      {/* the locket: a soft, matte back and rim */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, -0.03]}>
         <cylinderGeometry args={[R + 0.035, R + 0.035, 0.05, 72]} />
-        <meshPhysicalMaterial color="#d9a596" metalness={0.85} roughness={0.28} clearcoat={0.6} envMapIntensity={1.4} />
+        <meshPhysicalMaterial color="#efe0d9" roughness={0.7} sheen={0.5} sheenColor="#ffffff" envMapIntensity={0.6} />
       </mesh>
       <mesh>
         <torusGeometry args={[R + 0.012, 0.026, 20, 96]} />
-        <meshPhysicalMaterial color="#e8b8aa" metalness={0.9} roughness={0.18} clearcoat={1} envMapIntensity={1.8} />
+        <meshPhysicalMaterial color="#f2d9d3" roughness={0.55} sheen={0.6} sheenColor="#ffffff" envMapIntensity={0.7} />
       </mesh>
       {/* the photo */}
       <mesh material={material} position={[0, 0, 0.002]}>

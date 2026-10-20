@@ -1,6 +1,6 @@
 # Heart Doll app
 
-The phone app for the Heart Doll, rebuilt in React and React Three Fiber: a glass heart that fills with liquid, joined by glass tubes to the two people. **Them** is the Heart Doll itself; **You** are your photo in a floating locket.
+The phone app for the Heart Doll, rebuilt in React and React Three Fiber: a frosted-glass heart that fills with liquid, joined by frosted tubes to the two people. **Them** is the Heart Doll itself; **You** are your photo in a floating locket. It shares the [customiser website](../../website)'s look: warm paper, soft matte materials, the same studio lighting, Fraunces and Inter.
 
 **Try the demo:** https://rkdotxyz.github.io/DM2601/app/ (with a simulated doll: press its Heart and Cross buttons, and tap your photo).
 
@@ -48,4 +48,4 @@ The protocol is in [`docs/protocol.md`](../docs/protocol.md); the app also under
 
 ## Credits
 
-Default portrait: [Woman in white crew neck shirt smiling](https://unsplash.com/photos/woman-in-white-crew-neck-shirt-smiling-IF9TK5Uy-KI) by [Jake Nackos](https://unsplash.com/@jakenackos), under the [Unsplash License](https://unsplash.com/license). Typeface: Fraunces (SIL Open Font License).
+Default portrait: [Woman in white crew neck shirt smiling](https://unsplash.com/photos/woman-in-white-crew-neck-shirt-smiling-IF9TK5Uy-KI) by [Jake Nackos](https://unsplash.com/@jakenackos), under the [Unsplash License](https://unsplash.com/license). Typefaces: Fraunces and Inter (SIL Open Font License).

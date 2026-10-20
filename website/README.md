@@ -16,7 +16,9 @@ Put the doll in the middle, then make it yours:
 
 **Places:** the button under the doll moves it between eight little 3D rooms: a plain studio, a bedside table, on the bed, a window sill, a bookshelf, a desk, a sofa and on a suitcase. They're real 3D, so you can still drag to look around.
 
-Night mode dims the room so the glow looks as it would by the bed (lamps switch on, the window shows the night sky), and the save button downloads a PNG of your doll where it is.
+The save button downloads a PNG of your doll where it is.
+
+**Music:** the note button plays the group's soundtrack, looping, with a fade in and out. Browsers only allow sound after a click, so it starts when you press it; if you left it on, it comes back on your first tap next time.
 
 ## Run it
 
@@ -40,14 +42,15 @@ npm run lint
 
 ## How it's built
 
-[Vite](https://vite.dev), React and TypeScript, with [React Three Fiber](https://r3f.docs.pmnd.rs) and [drei](https://drei.docs.pmnd.rs) for the 3D, `@react-three/postprocessing` for the glow, and [zustand](https://zustand.docs.pmnd.rs) for state. There are no image or model files: the doll and everything on it are built in code.
+[Vite](https://vite.dev), React and TypeScript, with [React Three Fiber](https://r3f.docs.pmnd.rs) and [drei](https://drei.docs.pmnd.rs) for the 3D, `@react-three/postprocessing` for the glow, and [zustand](https://zustand.docs.pmnd.rs) for state. There are no image or model files: the doll and everything on it are built in code. The one media file is the music, `public/music/background.mp3`.
 
 ```
 src/
-  App.tsx              layout, toolbar (night, save, start over), place picker
+  App.tsx              layout, toolbar (music, save, start over), place picker
   Scene.tsx            camera, lights, bloom, orbit controls
   store.ts             everything you can change, in one zustand store
   ui/Panel.tsx         the customisation panel and its tabs
+  ui/Music.tsx         the background music: play/pause, always looping, remembered
   doll/
     profile.ts         the body's shape: one curve, spun around; helpers to place things on it
     Doll.tsx           body, feet, seams, embroidered face, the glowing heart, stickers, drawing
@@ -75,3 +78,5 @@ While developing, the store is available in the browser console as `window.doll`
 ## License
 
 Code: MIT, see [`LICENSE`](../LICENSE). Design and text: [CC BY 4.0](../LICENSE-CC-BY-4.0.txt).
+
+Music: "Soundtrack Idea 1" by Max, DM2601 Group 11. Encoded from the original WAV as MP3 (about 2.2 MB), with the 0.6 s of silence at the start trimmed so the loop has no gap.
