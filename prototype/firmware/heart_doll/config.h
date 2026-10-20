@@ -52,10 +52,11 @@ const float         HEART_FLOOR  = 0.06f; // glow between beats, 0..1 of the pea
 const float CONNECTED_LEVEL = 0.60f;  // only the phone person is available
 const float TOGETHER_LEVEL  = 1.00f;  // both are available
 
-// No WiFi: short blue blink (used from Phase 3)
-const unsigned long NOWIFI_PERIOD_MS = 2000;
-const unsigned long NOWIFI_ON_MS     = 120;
-const float         NOWIFI_LEVEL     = 0.60f;
+// No phone: short blue blink while no phone has the app open (and while
+// the doll can't join WiFi, in hotspot mode). Blue never means anything else.
+const unsigned long NOPHONE_PERIOD_MS = 2000;
+const unsigned long NOPHONE_ON_MS     = 120;
+const float         NOPHONE_LEVEL     = 0.60f;
 
 // Acknowledgement flash after a button press
 const unsigned long FLASH_MS = 150;
@@ -72,10 +73,43 @@ const bool          BOOT_COLOUR_CHECK = true;   // set false once you trust it
 const unsigned long COLOUR_CHECK_MS   = 500;
 
 // ---------------------------------------------------------------------
-// Network (from Phase 3)
+// Network
 // ---------------------------------------------------------------------
+// How the phone reaches the doll:
+//   WIFI_OWN_NETWORK  the doll makes its own WiFi (DOLL_WIFI_NAME in
+//                     secrets.h). Join it, and the app opens by itself.
+//                     No internet or hotspot needed. The default.
+//   WIFI_HOTSPOT      the doll joins your WiFi or phone hotspot
+//                     (WIFI_SSID in secrets.h), as before v1.2.
+enum WifiMode { WIFI_OWN_NETWORK, WIFI_HOTSPOT };
+const WifiMode WIFI_MODE = WIFI_OWN_NETWORK;
+
 const char HOSTNAME[] = "heartdoll";              // -> http://heartdoll.local
 const unsigned long SOCKET_CLEANUP_MS = 1000;     // tidy closed phone links
+
+// One phone at a time. On its own network, the doll lets this many phones
+// join its WiFi; in both modes, it keeps this many app connections and
+// turns others away with "Someone else is with the doll". Safe 1..4.
+const int MAX_PHONES = 1;
+
+// A phone that leaves without saying so (walks out of range, switches
+// WiFi off) is dropped from the doll's network after this long, which
+// frees its place. The ESP32 allows 10 or more.
+const uint16_t WIFI_IDLE_DROP_S = 60;
+
+// A phone can vanish without closing the app (WiFi switched off, out of
+// range). The doll pings the app every PHONE_PING_S when it's quiet, and
+// closes a connection that hasn't answered for PHONE_SILENT_S.
+const uint16_t PHONE_PING_S   = 2;
+const uint16_t PHONE_SILENT_S = 6;
+
+// When no phone has had the app open for this long, the phone person has
+// stepped away: the doll treats it as "unavailable". Shorter gaps (a
+// reload, a locked screen, a WiFi blip) change nothing.
+const unsigned long PHONE_GONE_MS = 60000;
+
+// The doll's own network: its WiFi channel (1, 6 or 11 are usual).
+const int DOLL_WIFI_CHANNEL = 6;
 
 // ---------------------------------------------------------------------
 // Serial Monitor

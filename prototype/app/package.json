@@ -9,7 +9,9 @@
     "build": "tsc -b && vite build",
     "build:demo": "tsc -b && vite build --mode demo",
     "preview": "vite preview",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "build:doll": "tsc -b && vite build --mode doll && node scripts/make-web-page.mjs",
+    "qr": "node scripts/make-qr.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
@@ -21,11 +23,14 @@
     "three": "^0.186.1"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "qrcode": "^1.5.4",
     "typescript": "^7.0.2",
-    "vite": "^8.3.4"
+    "vite": "^8.3.4",
+    "vite-plugin-singlefile": "^2.3.3"
   }
 }

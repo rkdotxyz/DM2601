@@ -7,7 +7,7 @@
     ledSetPattern(p)      choose what to show: off, breathing, soft or full heartbeat
     ledFlash()            play the short white acknowledgement flash
     ledColourCheck()      red, green, blue once at start-up (blocking, setup only)
-    ledSetNoWifi(on)      show the blue "no WiFi" blink (from Phase 3)
+    ledSetNoPhone(on)     show the blue "no phone" blink
     ledUpdate(now)        call every loop(); it redraws when it's time
 
   The module doesn't know about states, buttons or phones. The main
@@ -30,7 +30,7 @@ enum LedPattern {
 LedPattern    ledPattern      = PATTERN_OFF;
 bool          ledFlashing     = false;
 unsigned long ledFlashStartMs = 0;
-bool          ledNoWifi       = false;
+bool          ledNoPhone      = false;
 unsigned long ledLastFrameMs  = 0;
 
 // ----- drawing helpers (from Test B) --------------------------------
@@ -108,8 +108,8 @@ void ledFlash() {
   ledFlashStartMs = millis();
 }
 
-void ledSetNoWifi(bool on) {
-  ledNoWifi = on;
+void ledSetNoPhone(bool on) {
+  ledNoPhone = on;
 }
 
 // Call every loop(). Only redraws every LED_FRAME_MS.
@@ -126,10 +126,11 @@ void ledUpdate(unsigned long now) {
     ledFlashing = false;
   }
 
-  // Priority 2: no WiFi. During the short blink, blue replaces the
-  // pattern; the rest of the time the pattern shows as usual.
-  if (ledNoWifi && (now % NOWIFI_PERIOD_MS) < NOWIFI_ON_MS) {
-    ledSetRGB(0, 0, NOWIFI_LEVEL);
+  // Priority 2: no phone. During the short blink, blue replaces the
+  // pattern; the rest of the time the pattern shows as usual, so the
+  // doll person still sees their own breathing.
+  if (ledNoPhone && (now % NOPHONE_PERIOD_MS) < NOPHONE_ON_MS) {
+    ledSetRGB(0, 0, NOPHONE_LEVEL);
     return;
   }
 

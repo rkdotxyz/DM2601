@@ -34,6 +34,10 @@ The build was split into phases, each adding one thing and ending with something
 
 **A heart that fills.** The phone app is drawn from my own sketch: two people joined to a heart by pipes. Each person fills half the heart, so it's only ever full when you're both there. The liquid fills from the bottom for you and drips in from the top for them, so the picture also says *who* arrived.
 
+**Its own WiFi.** The demo had one phone and a university network the doll couldn't join. So in v1.2 the doll stopped joining networks and started making one: scan its QR sticker, and the app opens by itself, like hotel WiFi. One phone at a time, because there's one person on the other side of the heart. And the blue blink changed meaning, from "no WiFi" to "nobody's here".
+
+**A 3D app.** The flat app worked, but didn't feel like something you'd keep by the bed. v1.2 rebuilds it in 3D: the doll itself at the top, your photo in a locket at the bottom, and a glass heart between them. One rule shaped the details: the liquid always travels down a person's tube before it fills their half of the heart, and drains back the same way, so the picture never shows something impossible.
+
 ## What's next
 
 The [roadmap](../README.md#roadmap): a heartbeat you can feel (haptics), sound and a recorded goodnight, robustness, and then into an actual doll, followed by a cloud relay and battery power.

@@ -7,13 +7,13 @@ How the firmware and the phone app fit together, and why they're built this way.
 ```mermaid
 flowchart LR
   buttons["buttons.h<br/>debounced presses"] -- "Heart / Cross" --> main["heart_doll.ino<br/>handleEvent()"]
-  link["app_link.h<br/>WiFi, web server, WebSocket"] -- "phone: available / unavailable" --> main
+  link["app_link.h<br/>own WiFi, captive portal,<br/>web server, WebSocket"] -- "phone: available / unavailable" --> main
   serial["Serial Monitor<br/>a, u, ?"] --> link
   main -- "state + event" --> rules["state_machine.h<br/>nextState()"]
   rules -- "next state" --> main
   main -- "pattern, flash" --> led["led.h<br/>PWM patterns"]
   main -- "status and events" --> link
-  link <-- "WebSocket /ws" --> phone["Phone browser<br/>web_page.h"]
+  link <-- "WebSocket /ws" --> phone["Phone browser<br/>the app from web_page.h"]
   led --> rgb(("RGB LED"))
 ```
 
@@ -23,10 +23,10 @@ Each file is one module with one job. They're `.h` tabs in a single Arduino sket
 |---|---|---|
 | `heart_doll.ino` | Turns inputs into events, asks the rules for the next state, carries out the effects | All modules |
 | `state_machine.h` | The rules: `(state, event) → next state`. Nothing else | States and events. No LED, buttons or network |
-| `led.h` | Draws a pattern on the RGB LED with PWM: off, breathing, heartbeat at two strengths, flash, no-WiFi blink | `config.h` |
+| `led.h` | Draws a pattern on the RGB LED with PWM: off, breathing, heartbeat at two strengths, flash, no-phone blink | `config.h` |
 | `buttons.h` | `buttonPressed()`: true exactly once per press | `config.h` |
-| `app_link.h` | Joins WiFi, serves the page, keeps a WebSocket to every phone, and lets the Serial Monitor play the phone | `state_machine.h` (event numbers) |
-| `web_page.h` | The phone app: HTML, CSS and JavaScript in one raw string, stored in flash | The message protocol |
+| `app_link.h` | Makes the doll's WiFi (or joins yours), runs the captive portal, serves the app, keeps a WebSocket to one phone, and lets the Serial Monitor play the phone | `state_machine.h` (event numbers) |
+| `web_page.h` | The phone app: the React app from [`app/`](../app), one gzip-compressed file in flash. Generated | The message protocol |
 | `config.h` | Every pin, timing and pattern setting in one place | — |
 | `secrets.h` | Your WiFi name and password. Not in the repo; copy `secrets.example.h` | — |
 
@@ -112,7 +112,7 @@ void loop() {
   int fromPhone = appLinkReadEvent();
   if (fromPhone >= 0) handleEvent((DollEvent)fromPhone);
   appLinkUpdate(now);
-  ledSetNoWifi(!appLinkOnline());
+  checkPhone(now);           // blue blink with no phone; a minute gone = stepped away
   ledUpdate(now);
 }
 ```
@@ -124,21 +124,31 @@ There's no `delay()` anywhere after start-up. Every light pattern is a function 
 `ledUpdate()` decides what to show by priority:
 
 1. **The acknowledgement flash:** white for 150 ms after a button press.
-2. **No WiFi:** a short blue blink every 2 s while the doll is offline. Blue never means anything else.
+2. **No phone:** a short blue blink every 2 s while no phone has the app open (in hotspot mode, also while the doll can't join WiFi). In between, the state's pattern still shows, so the doll person sees their own breathing. Blue never means anything else.
 3. **The pattern for the current state.**
 
 Brightness goes through gamma correction (the level is squared) so fades look even to the eye. That's why "60%" means 60% as the eye sees it, about 36% of the LED's power. The heartbeat is two bell-shaped bumps: a strong "lub" at 120 ms and a softer "dub" at 360 ms, over a faint floor.
 
 ## The phone app
 
-`web_page.h` is one page: an SVG of two people joined to a heart by squiggly pipes. Three ideas carry it:
+The app is a React and React Three Fiber project in [`app/`](../app); its [README](../app/README.md) has the details. Three ideas carry it:
 
-- **Trim path.** Each pipe is drawn twice, a faint track and a red copy. The red copy's dash is as long as the path; sliding it (`stroke-dashoffset`) makes the line draw itself.
-- **The heart as a container.** The liquid is a rectangle with a wavy top, clipped to the heart's outline. Each person fills half. The heart is wider at the top, so a small lookup table turns "half the area" into the right height (59%).
-- **One animation loop, only while moving.** A single `requestAnimationFrame` loop moves the pipes, the liquid, the ripple and falling drops, and stops when everything is still. Phones set to reduce motion skip the animations but show every state.
+- **One number per person.** Each person's liquid is a single value from 0 to 2: 0 to 1 is liquid travelling down their tube, 1 to 2 is their half of the heart filling. Joining moves it up, leaving moves it back down, so the tube always fills before the heart and drains after it.
+- **Liquid that stays level.** The liquid is the heart's inner shape, cut off by a shader at a surface that stays level with the world as the phone tilts, sloshing on a pair of springs.
+- **The doll decides.** The app only sends requests and draws the status the doll reports, as before. A `DollLink` interface hides where the doll is: the real doll's WebSocket, or a simulated doll that runs the same rules for the demo.
 
-Once both are available and the liquid reaches the top, a CSS lub-dub at 1 s per beat matches the doll.
+For the doll, `npm run build:doll` builds the app into one HTML file (scripts, styles, font and photo inside), compresses it with gzip, and writes it into `web_page.h` as bytes. The doll sends them unchanged with `Content-Encoding: gzip`, and the phone unpacks them. At about 440 KB it needs the **Huge APP** partition scheme.
+
+## The doll's own network
+
+With `WIFI_MODE = WIFI_OWN_NETWORK`, `app_link.h` makes the doll an access point at `192.168.4.1`:
+
+- **One phone.** `WiFi.softAP()` takes the most phones allowed to join (`MAX_PHONES`), and `esp_wifi_set_inactive_time()` drops a phone that has gone quiet (`WIFI_IDLE_DROP_S`), so a phone that walks away frees its place.
+- **A captive portal.** A small DNS server answers every name with the doll, and the web server answers the phone's "am I online?" checks with a redirect to the app, until the app has opened. The [protocol](protocol.md#reaching-the-doll) lists the checks.
+- **One app connection.** The WebSocket keeps a short list of accepted connections. A new one from the same phone replaces the old (a reload); one from anyone else gets `link:busy`.
+- **A phone that vanishes.** Switching WiFi off doesn't always close the app's connection: the phone just stops answering. So the doll pings a quiet connection every `PHONE_PING_S` and closes it after `PHONE_SILENT_S` without an answer, and on its own network it closes every app connection as soon as no phone is left on its WiFi.
+- **Has the phone gone?** `checkPhone()` in `heart_doll.ino` blinks blue while no phone has the app open, and `showState()` then draws the state as if the phone person had stepped away (it asks `nextState()` what that would be), so the doll never beats for a phone that isn't there. The state itself is kept, so a reload or a locked screen picks up where it left off. If the phone person is still available after `PHONE_GONE_MS` with no phone, it sends the phone's "unavailable" through `handleEvent()`, like any other input.
 
 ## Settings
 
-Everything you might tune is in `config.h`, with units in the names (`_MS` = milliseconds) and safe ranges in the comments: pins, `COMMON_ANODE`, breath and beat timing, the 60% and 100% heartbeat levels, debounce, the start-up colour check and the hostname. Animation timing and colours for the app are constants at the top of the script and CSS in `web_page.h`.
+Everything you might tune is in `config.h`, with units in the names (`_MS` = milliseconds) and safe ranges in the comments: pins, `COMMON_ANODE`, breath and beat timing, the 60% and 100% heartbeat levels, debounce, the start-up colour check, the hostname, the WiFi mode, the phone limit and the timeouts. The app's timing and colours live in [`app/src`](../app/src).

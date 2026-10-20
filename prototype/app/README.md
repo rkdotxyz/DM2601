@@ -4,7 +4,7 @@ The phone app for the Heart Doll, rebuilt in React and React Three Fiber: a glas
 
 **Try the demo:** https://rkdotxyz.github.io/DM2601/app/ (with a simulated doll: press its Heart and Cross buttons, and tap your photo).
 
-> The doll still serves the original app from `firmware/heart_doll/web_page.h`. Baking this app into the firmware, and the doll's own WiFi network, come in the next step.
+The doll serves this app itself, from [`firmware/heart_doll/web_page.h`](../firmware/heart_doll/web_page.h), over its own WiFi.
 
 ## What it does
 
@@ -29,7 +29,8 @@ Open the printed address. Add `?doll=192.168.4.1` (or your doll's address) to dr
 |---|---|
 | `npm run dev` | Development server, simulated doll |
 | `npm run build:demo` | The demo build (simulated doll), as published on GitHub Pages |
-| `npm run build` | The build for the doll: talks to the doll that serves it |
+| `npm run build:doll` | Builds the app for the doll as one gzipped file and rewrites `firmware/heart_doll/web_page.h`. Upload the firmware again afterwards |
+| `npm run qr` | A printable QR sticker that joins the doll's WiFi, from `firmware/heart_doll/secrets.h`, in `qr/` (kept out of git: it holds the password) |
 | `npm run typecheck` | Type-check |
 
 ## How it's built
@@ -43,7 +44,7 @@ Open the printed address. Add `?doll=192.168.4.1` (or your doll's address) to dr
 | `src/fx/` | Sound, haptics and tilt |
 | `src/demo/` | The demo page and the simulated doll's panel, with a copy of its LED |
 
-The protocol is unchanged: see [`docs/protocol.md`](../docs/protocol.md).
+The protocol is in [`docs/protocol.md`](../docs/protocol.md); the app also understands `link:busy`, which the doll sends to a second phone.
 
 ## Credits
 

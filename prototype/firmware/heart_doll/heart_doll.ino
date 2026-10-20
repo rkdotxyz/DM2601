@@ -1,5 +1,5 @@
 /*
-  heart_doll.ino  -  Heart Doll firmware (v1.1: liquid heart app)
+  heart_doll.ino  -  Heart Doll firmware (v1.2: its own WiFi, the 3D app)
 
   A doll with an RGB heart and two buttons:
     Heart  -> tells the phone "I'm available";   heart breathes slowly
@@ -15,8 +15,8 @@
     state_machine.h   the rules: (state, event) -> next state
     led.h             draws patterns on the LED
     buttons.h         debounced button presses
-    app_link.h        WiFi, the web server and the WebSocket to the phone
-    web_page.h        the phone app itself (HTML, CSS, JavaScript)
+    app_link.h        the doll's WiFi, the web server and the WebSocket
+    web_page.h        the phone app, built from prototype/app (generated)
     secrets.h         your WiFi name and password (never committed)
     secrets.example.h template: copy it to secrets.h and fill it in
     heart_doll.ino    this file: turns inputs into events, applies the
@@ -35,13 +35,23 @@
 // The single source of truth.
 DollState state = STATE_IDLE;
 
+// Is a phone here, with the app open? And since when has it been gone
+// (0 while a phone has it open)?
+bool          phoneHere        = false;
+unsigned long phoneGoneSinceMs = 0;
+
 
 // ---------------------------------------------------------------------
 // Effects: what each state looks like, and what the phone is told
 // ---------------------------------------------------------------------
 
-// Each state has exactly one LED pattern.
+// Each state has exactly one LED pattern. While no phone is here, the LED
+// shows the state as if the phone person had stepped away (the rules
+// themselves say what that is): their heartbeat goes, and only the doll
+// person's own breathing is left. The state itself is kept, so a phone
+// that's back within PHONE_GONE_MS picks up where it left off.
 void showState(DollState s) {
+  if (!phoneHere) s = nextState(s, EVENT_APP_UNAVAILABLE);
   switch (s) {
     case STATE_IDLE:      ledSetPattern(PATTERN_OFF);       break;
     case STATE_WAITING:   ledSetPattern(PATTERN_BREATHING); break;
@@ -97,6 +107,38 @@ void handleEvent(DollEvent event) {
 
 
 // ---------------------------------------------------------------------
+// Is a phone here?
+// ---------------------------------------------------------------------
+// Blue blink while no phone has the app open, and no heartbeat for a phone
+// person who isn't there (see showState()). If no phone has been back for
+// PHONE_GONE_MS, they've gone for good: that counts as stepping away, and
+// the state changes too. Shorter gaps (a reload, a locked screen) only
+// change the LED until the phone is back.
+void checkPhone(unsigned long now) {
+  bool here = appLinkOnline() && appLinkPhones() > 0;
+  if (here != phoneHere) {
+    phoneHere = here;
+    Serial.println(here ? "A phone has the app open." : "No phone has the app open.");
+    showState(state);   // with or without the phone person's heartbeat
+  }
+  ledSetNoPhone(!phoneHere);
+
+  if (phoneHere) {
+    phoneGoneSinceMs = 0;
+    return;
+  }
+  if (phoneGoneSinceMs == 0) phoneGoneSinceMs = now ? now : 1;
+
+  bool phonePersonAvailable = (state == STATE_CONNECTED || state == STATE_DECLINED ||
+                               state == STATE_TOGETHER);
+  if (phonePersonAvailable && now - phoneGoneSinceMs >= PHONE_GONE_MS) {
+    Serial.println("No phone for a minute: the phone person has stepped away.");
+    handleEvent(EVENT_APP_UNAVAILABLE);
+  }
+}
+
+
+// ---------------------------------------------------------------------
 // setup() and loop()
 // ---------------------------------------------------------------------
 void setup() {
@@ -104,7 +146,7 @@ void setup() {
   delay(500);   // only here: let the USB serial connect
 
   Serial.println();
-  Serial.println("=== Heart Doll v1.1 - liquid heart ===");
+  Serial.println("=== Heart Doll v1.2 - its own WiFi ===");
 
   ledBegin();
   if (BOOT_COLOUR_CHECK) ledColourCheck();
@@ -127,7 +169,7 @@ void loop() {
 
   // 2. Network housekeeping (never waits).
   appLinkUpdate(now);
-  ledSetNoWifi(!appLinkOnline());   // blue blink while WiFi is down
+  checkPhone(now);
 
   // 3. Output: redraw the LED when it's time.
   ledUpdate(now);
