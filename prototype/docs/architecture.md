@@ -137,7 +137,7 @@ The app is a React and React Three Fiber project in [`app/`](../app); its [READM
 - **Liquid that stays level.** The liquid is the heart's inner shape, cut off by a shader at a surface that stays level with the world as the phone tilts, sloshing on a pair of springs.
 - **The doll decides.** The app only sends requests and draws the status the doll reports, as before. A `DollLink` interface hides where the doll is: the real doll's WebSocket, or a simulated doll that runs the same rules for the demo.
 
-For the doll, `npm run build:doll` builds the app into one HTML file (scripts, styles, font and photo inside), compresses it with gzip, and writes it into `web_page.h` as bytes. The doll sends them unchanged with `Content-Encoding: gzip`, and the phone unpacks them. At about 440 KB it needs the **Huge APP** partition scheme.
+For the doll, `npm run build:doll` builds the app into one HTML file (scripts, styles, font and photo inside), compresses it with gzip, and writes it into `web_page.h` as bytes. The doll sends them unchanged with `Content-Encoding: gzip`, and the phone unpacks them. At about 490 KB it needs the **Huge APP** partition scheme.
 
 ## The doll's own network
 

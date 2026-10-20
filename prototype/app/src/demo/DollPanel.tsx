@@ -13,6 +13,14 @@ const STATE_TEXT: Record<string, string> = {
   together: "Both are available",
 };
 
+const STATE_NAME: Record<string, string> = {
+  idle: "Idle",
+  waiting: "Waiting",
+  connected: "Connected",
+  declined: "Not now",
+  together: "Together",
+};
+
 const LED_TEXT: Record<string, string> = {
   idle: "Off",
   waiting: "Slow red breathing",
@@ -29,53 +37,52 @@ export function DollPanel({ doll, compact = false }: { doll: SimulatedDoll; comp
   );
   void snap;
 
+  const off = doll.unplugged;
+  const ledText = off ? "Off" : LED_TEXT[doll.state] + (!doll.phoneConnected ? ", blue blink (no phone)" : "");
+
   return (
     <section className={`doll${compact ? " compact" : ""}`} aria-label="Simulated doll">
-      <div className="doll-head">
+      {!compact && (
+        <>
+          <h2>The doll</h2>
+          <p className="hint">
+            You're both people here. Press <b>Heart</b> or <b>Cross</b> as the person with the doll,
+            and tap your photo in the app as the person with the phone.
+          </p>
+        </>
+      )}
+
+      {/* the doll's state and its LED, like the website's state card */}
+      <div className="state">
         <Led doll={doll} />
-        <div>
-          <div className="doll-title">The doll <span className="tag">simulated</span></div>
-          <div className="doll-state">
-            {doll.unplugged ? "Switched off" : (
-              <><code>{doll.state}</code> · {compact ? LED_TEXT[doll.state] : STATE_TEXT[doll.state]}</>
-            )}
-          </div>
+        <div className="state-text">
+          <span className="state-name">{off ? "Switched off" : STATE_NAME[doll.state]}</span>
+          <span className="state-note">{compact ? ledText : off ? "The doll has no power." : STATE_TEXT[doll.state]}</span>
+          {!compact && !off && <span className="state-note">LED: {ledText}</span>}
         </div>
       </div>
 
       <div className="doll-buttons">
-        <button className="hw heart" onClick={() => doll.pressHeart()} disabled={doll.unplugged}>
+        <button className="hw heart" onClick={() => doll.pressHeart()} disabled={off}>
           <svg viewBox="0 0 100 92" aria-hidden><path d="M50 88 C20 66 4 50 4 30 C4 15 15 4 29 4 C38 4 46 9 50 17 C54 9 62 4 71 4 C85 4 96 15 96 30 C96 50 80 66 50 88 Z" /></svg>
           <span>Heart</span>
         </button>
-        <button className="hw cross" onClick={() => doll.pressCross()} disabled={doll.unplugged}>
+        <button className="hw cross" onClick={() => doll.pressCross()} disabled={off}>
           <svg viewBox="0 0 24 24" aria-hidden><path d="M6 6 L18 18 M18 6 L6 18" /></svg>
           <span>Cross</span>
         </button>
       </div>
 
-      {!compact && (
-        <>
-          <p className="doll-help">
-            You're both people here. Press <b>Heart</b> or <b>Cross</b> as the person with the doll,
-            and tap <b>You</b> in the app as the person with the phone.
-          </p>
-          <dl className="doll-led">
-            <dt>LED</dt><dd>{doll.unplugged ? "Off" : LED_TEXT[doll.state]}{!doll.phoneConnected && !doll.unplugged ? ", blue blink (no phone)" : ""}</dd>
-          </dl>
-        </>
-      )}
-
       <div className="doll-switches">
         <label className="switch">
           <input type="checkbox" checked={doll.unplugged} onChange={(e) => doll.setUnplugged(e.target.checked)} />
-          <span className="track"><span /></span>
-          Doll switched off
+          <span className="switch-track" />
+          <span>Doll switched off</span>
         </label>
         <label className="switch">
           <input type="checkbox" checked={doll.otherPhone} onChange={(e) => doll.setOtherPhone(e.target.checked)} />
-          <span className="track"><span /></span>
-          Another phone has it
+          <span className="switch-track" />
+          <span>Another phone has it</span>
         </label>
       </div>
     </section>

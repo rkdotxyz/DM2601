@@ -52,9 +52,8 @@ export function Stage({ them, you, online, state, pending, ping, calm, onToggle 
       className={`stage-canvas${ready ? " ready" : ""}`}
       dpr={[1, 2]}
       camera={{ fov: 30, near: 0.1, far: 60, position: [0, FRAME.cy, 12] }}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      onCreated={({ gl }) => {
-        gl.setClearColor(0x000000, 0);
+      gl={{ antialias: true, powerPreference: "high-performance" }}
+      onCreated={() => {
         requestAnimationFrame(() => requestAnimationFrame(() => setReady(true)));
       }}
     >
@@ -68,19 +67,19 @@ export function Stage({ them, you, online, state, pending, ping, calm, onToggle 
         <Anchor at={THEM_TAG} target={themTag} />
         <Anchor at={YOU_TAG} target={youTag} />
       </Rig>
-      <Motes world={world} />
+      {/* The website's paper, as the scene's own background: the frosted
+          glass shows it through, softly blurred. */}
+      <color attach="background" args={["#efe9e3"]} />
 
-      <ambientLight intensity={0.55} color="#ffe2e6" />
-      <directionalLight position={[-2.5, 4, 5]} intensity={2.4} color="#fff1ec" />
-      <directionalLight position={[3, -2, -3]} intensity={0.8} color="#ff6c88" />
-
-      {/* Reflections for the glass, made from shapes of light: no image
-          files, so it works offline on the doll. */}
+      {/* The website's studio lighting (website/src/Scene.tsx). */}
+      <ambientLight intensity={0.45} />
+      <directionalLight position={[2.5, 4, 3]} intensity={1.6} color="#fff4e8" />
+      <directionalLight position={[-3, 2, -2]} intensity={0.5} color="#dfe8ff" />
+      {/* soft studio reflections, built here so nothing is downloaded */}
       <Environment resolution={128} frames={1}>
-        <Lightformer form="rect" intensity={2.4} color="#ffffff" position={[0, 5, -2]} scale={[10, 3, 1]} rotation-x={Math.PI / 2} />
-        <Lightformer form="rect" intensity={1.6} color="#ffd0d8" position={[-5, 1, 1]} scale={[2, 8, 1]} rotation-y={Math.PI / 2} />
-        <Lightformer form="rect" intensity={1.2} color="#ff5a7a" position={[5, -1, 1]} scale={[2, 8, 1]} rotation-y={-Math.PI / 2} />
-        <Lightformer form="rect" intensity={1.1} color="#fff0f2" position={[-3, 2.5, 5]} scale={[2.5, 1.2, 1]} />
+        <Lightformer form="rect" intensity={1.6} position={[0, 4, 2]} scale={[6, 2, 1]} />
+        <Lightformer form="rect" intensity={0.8} position={[-4, 1, 1]} scale={[2, 4, 1]} />
+        <Lightformer form="rect" intensity={0.6} position={[4, 1, -1]} scale={[2, 4, 1]} />
       </Environment>
     </Canvas>
     <div ref={themTag} className="anchor"><NameTag name="Them" status={them ? "here" : "away"} on={them} /></div>
@@ -230,63 +229,4 @@ function Director({ world, ping }: { world: RefObject<World>; ping: DollEventPin
     }
   });
   return null;
-}
-
-/** Slow warm motes drifting in the dark, for depth. */
-function Motes({ world }: { world: RefObject<World> }) {
-  const COUNT = 110;
-  const points = useRef<THREE.Points>(null);
-  const { geometry, material, seeds } = useMemo(() => {
-    const pos = new Float32Array(COUNT * 3);
-    const seeds = new Float32Array(COUNT);
-    for (let i = 0; i < COUNT; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 6;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 8;
-      pos[i * 3 + 2] = -1.5 - Math.random() * 4;
-      seeds[i] = Math.random();
-    }
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    geometry.setAttribute("seed", new THREE.BufferAttribute(seeds, 1));
-    const material = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      uniforms: { uTime: { value: 0 }, uWarm: { value: 0 }, uPx: { value: 1 } },
-      vertexShader: /* glsl */ `
-        attribute float seed;
-        uniform float uTime;
-        uniform float uPx;
-        varying float vAlpha;
-        void main() {
-          vec3 p = position;
-          p.y += mod(uTime * (0.05 + seed * 0.08) + seed * 8.0, 8.0) - 4.0 - position.y * 0.0;
-          p.x += sin(uTime * 0.3 + seed * 20.0) * 0.15;
-          vec4 mv = modelViewMatrix * vec4(p, 1.0);
-          gl_Position = projectionMatrix * mv;
-          gl_PointSize = (6.0 + seed * 10.0) * uPx / -mv.z;
-          vAlpha = 0.25 + 0.75 * fract(seed * 13.7);
-        }`,
-      fragmentShader: /* glsl */ `
-        uniform float uWarm;
-        varying float vAlpha;
-        void main() {
-          float d = length(gl_PointCoord - 0.5);
-          float a = smoothstep(0.5, 0.0, d) * vAlpha * (0.22 + uWarm * 0.35);
-          gl_FragColor = vec4(mix(vec3(1.0, 0.75, 0.8), vec3(1.0, 0.35, 0.45), uWarm), a);
-        }`,
-    });
-    return { geometry, material, seeds };
-  }, []);
-  void seeds;
-
-  useFrame((state) => {
-    const w = world.current;
-    const u = material.uniforms;
-    if (!w.calm) u.uTime.value = state.clock.elapsedTime;
-    u.uWarm.value += ((w.glow) - u.uWarm.value) * 0.03;
-    u.uPx.value = state.gl.getPixelRatio() * 10;
-  });
-
-  return <points ref={points} geometry={geometry} material={material} />;
 }

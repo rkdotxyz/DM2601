@@ -1,45 +1,38 @@
-/* The phone app. One look, made for bedtime: a deep velvet night, warm
-   porcelain and red glass. */
+/* The phone app, in the customiser website's look: warm paper and crimson,
+   Fraunces for headings and Inter for text. The tokens match
+   website/src/styles.css; keep them in step. */
 :root {
-  --night: #0b0709;
-  --night-2: #170c11;
-  --plum: #2c0f1b;
-  --surface: rgb(30 19 24 / 0.72);
-  --surface-solid: #1d1317;
-  --ink: #f8ece8;
-  --muted: #a8949a;
-  --faint: #6f5d63;
-  --line: rgb(255 220 228 / 0.1);
-  --line-strong: rgb(255 220 228 / 0.18);
-  --avatar: #2a1d22;
-  --shell: #20151a;
-  --shell-hi: #33232a;
-  --red: #ff4d6d;
-  --red-soft: #ff8197;
-  --red-deep: #b5163c;
-  --liquid-top: #ff6b84;
-  --liquid-deep: #c21d47;
-  --bg-glow: #4a1424;
-  --ok: #5fd197;
-  --warn: #f0b456;
-  --shadow: 0 30px 80px -30px rgb(0 0 0 / 0.8), 0 2px 8px rgb(0 0 0 / 0.35);
-  --serif: "Fraunces", ui-serif, Georgia, serif;
-  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
-  color-scheme: dark;
+  --paper: #efe9e3;
+  --panel: #faf7f3;
+  --ink: #2a2222;
+  --muted: #7b6f6c;
+  --line: #e2d9d2;
+  --accent: #c8324c;
+  --accent-soft: #f6dde1;
+  --chip: #ffffff;
+  --glass: color-mix(in srgb, var(--panel) 85%, transparent);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  --ok: #2f8f5f;
+  --warn: #c9871d;
+  --display: "Fraunces", Georgia, serif;
+  --body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+html, body, #root { height: 100%; margin: 0; }
 body {
-  margin: 0;
-  background: var(--night);
+  font: 15px/1.5 var(--body);
   color: var(--ink);
-  font: 15px/1.45 var(--sans);
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
+  transition: background 0.4s;
 }
-button { font: inherit; color: inherit; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -55,39 +48,30 @@ button { font: inherit; color: inherit; }
   flex-direction: column;
   overflow: hidden;
   isolation: isolate;
-  background: var(--night);
-  padding: max(12px, env(safe-area-inset-top)) 18px max(10px, env(safe-area-inset-bottom));
+  background: var(--paper);
+  color: var(--ink);
+  padding: max(12px, env(safe-area-inset-top)) 16px max(10px, env(safe-area-inset-bottom));
   touch-action: manipulation;
+  transition: background 0.4s;
 }
 
-/* The night sky behind the scene: a plum glow that warms when you're together. */
+/* A soft warm light where the heart is, stronger when it's full. */
 .sky {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(70% 45% at 50% 56%, var(--plum), transparent 75%),
-    radial-gradient(120% 70% at 50% 120%, #1f0a12, transparent 60%),
-    linear-gradient(180deg, #0a0608 0%, var(--night-2) 55%, #0b0608 100%);
+  background: radial-gradient(60% 40% at 50% 54%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 72%);
 }
 .sky::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(55% 38% at 50% 55%, rgb(255 60 100 / 0.22), transparent 70%);
+  background: radial-gradient(55% 36% at 50% 54%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%);
   opacity: 0;
   transition: opacity 1.6s ease;
 }
 .phone.full .sky::after { opacity: 1; }
-/* a whisper of film grain, so the dark never bands */
-.sky::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
 
 .bar {
   position: relative;
@@ -95,55 +79,51 @@ button { font: inherit; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  min-height: 38px;
+  gap: 10px;
+  min-height: 40px;
 }
 .brand {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 640;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 18px;
   letter-spacing: -0.01em;
-  font-size: 15px;
 }
-.brand svg { width: 17px; height: 16px; fill: var(--red); filter: drop-shadow(0 0 6px rgb(255 77 109 / 0.6)); }
-.bar-right { display: flex; align-items: center; gap: 8px; }
+.brand svg { width: 17px; height: 16px; fill: var(--accent); }
+.bar-right { display: flex; align-items: center; gap: 6px; }
 
+/* Round icon buttons, as on the website's toolbar. */
 .icon-btn {
-  width: 34px; height: 34px;
+  width: 38px; height: 38px; flex: none;
   display: grid; place-items: center;
   border-radius: 50%;
   border: 1px solid var(--line);
-  background: var(--surface);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  cursor: pointer;
-  color: var(--muted);
-  transition: color 0.2s, transform 0.15s;
+  background: var(--panel);
+  color: var(--ink);
+  transition: border-color 0.15s, transform 0.15s;
 }
-.icon-btn:active { transform: scale(0.92); }
-.icon-btn:focus-visible { outline: 2px solid var(--red-soft); outline-offset: 2px; }
-.icon-btn svg { width: 17px; height: 17px; fill: currentColor; }
-.icon-btn svg .wave { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.icon-btn:hover { border-color: var(--muted); }
+.icon-btn:active { transform: scale(0.94); }
+.icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  height: 34px;
-  padding: 0 12px;
+  height: 38px;
+  padding: 0 13px;
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--panel);
   border: 1px solid var(--line);
-  font-size: 12.5px;
-  font-weight: 560;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--muted);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   white-space: nowrap;
 }
-.pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); }
-.pill.online i { background: var(--ok); box-shadow: 0 0 0 3px rgb(95 209 151 / 0.18), 0 0 8px rgb(95 209 151 / 0.6); }
+.pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); }
+.pill.online i { background: var(--ok); }
 .pill.busy i, .pill.offline i { background: var(--warn); }
 .pill.connecting i { animation: blink 1s ease-in-out infinite; }
 
@@ -151,67 +131,68 @@ button { font: inherit; color: inherit; }
   position: relative;
   z-index: 2;
   text-align: center;
-  margin-top: clamp(14px, 3.4vh, 34px);
+  margin-top: clamp(14px, 3vh, 30px);
   pointer-events: none;
 }
-.headline h1 {
+.headline .eyebrow {
   margin: 0;
-  font-family: var(--serif);
-  font-weight: 420;
-  font-size: clamp(30px, 8.6vw, 38px);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  font-variation-settings: "opsz" 96, "SOFT" 100;
-  background: linear-gradient(180deg, #fff6f3 30%, #e9c9cf);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
 }
-.headline h1.muted { background: none; color: var(--faint); }
-.headline p { margin: 8px 0 0; color: var(--muted); font-size: 15px; min-height: 1.45em; }
+.headline h1 {
+  margin: 6px 0 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(28px, 8vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.headline h1.muted { color: var(--muted); }
+.headline p { margin: 8px 0 0; color: var(--muted); min-height: 1.5em; }
 
-.stage { position: relative; flex: 1; min-height: 0; margin: 0 -18px; }
+.stage { position: relative; flex: 1; min-height: 0; margin: 0 -16px; }
 .stage-canvas { position: absolute !important; inset: 0; touch-action: none; opacity: 0; transform: scale(0.97); transition: opacity 1.2s ease, transform 1.6s cubic-bezier(.22, 1, .36, 1); }
 .stage-canvas.ready { opacity: 1; transform: none; }
 
-/* Name tags, anchored to the figures in 3D. */
+/* Name tags, anchored to the people in 3D: website chips. */
 .anchor { position: absolute; left: 0; top: 0; pointer-events: none; will-change: transform; z-index: 1; opacity: 0; transition: opacity 0.4s; }
+.tag-row { display: flex; align-items: center; gap: 6px; }
 .name-tag {
   display: flex; align-items: baseline; gap: 6px;
-  padding: 5px 11px 6px;
+  padding: 5px 12px 6px;
   border-radius: 999px;
-  background: rgb(20 12 16 / 0.55);
+  background: var(--glass);
   border: 1px solid var(--line);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  font-size: 12.5px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 13px;
   white-space: nowrap;
-  pointer-events: none;
   user-select: none;
-  transition: border-color 0.5s, background 0.5s;
+  transition: border-color 0.4s, background 0.4s;
 }
-.tag-row { display: flex; align-items: center; gap: 6px; }
+.name-tag b { font-weight: 600; color: var(--ink); }
+.name-tag span { color: var(--muted); }
+.name-tag.on { border-color: var(--accent); background: var(--accent-soft); }
+.name-tag.on span { color: var(--accent); }
+
 .photo-btn {
   pointer-events: auto;
-  width: 30px; height: 30px;
+  width: 32px; height: 32px;
   display: grid; place-items: center;
   border-radius: 50%;
-  background: rgb(20 12 16 / 0.55);
+  background: var(--panel);
   border: 1px solid var(--line);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: var(--muted);
+  color: var(--ink);
   cursor: pointer;
-  transition: color 0.2s, transform 0.15s, border-color 0.2s;
+  transition: border-color 0.15s, transform 0.15s;
 }
-.photo-btn:hover { color: var(--ink); border-color: var(--line-strong); }
+.photo-btn:hover { border-color: var(--muted); }
 .photo-btn:active { transform: scale(0.9); }
-.photo-btn:focus-within { outline: 2px solid var(--red-soft); outline-offset: 2px; }
-.photo-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; }
-.name-tag b { font-weight: 640; color: var(--ink); }
-.name-tag span { color: var(--muted); }
-.name-tag.on { border-color: rgb(255 90 120 / 0.35); }
-.name-tag.on span { color: var(--red-soft); }
+.photo-btn:focus-within { outline: 2.5px solid var(--accent); outline-offset: 2px; }
+.photo-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 
 /* ----- offline / busy card ----- */
 .veil {
@@ -220,34 +201,33 @@ button { font: inherit; color: inherit; }
   display: grid;
   place-items: center;
   padding: 24px;
-  background: rgb(8 4 6 / 0.55);
-  backdrop-filter: blur(14px) saturate(0.7);
-  -webkit-backdrop-filter: blur(14px) saturate(0.7);
+  background: color-mix(in srgb, var(--paper) 60%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 5;
 }
 .card {
   width: min(320px, 100%);
   text-align: center;
-  background: var(--surface-solid);
-  border: 1px solid var(--line-strong);
-  border-radius: 28px;
-  padding: 28px 22px 26px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 26px 22px 24px;
   box-shadow: var(--shadow);
 }
-.card h2 { margin: 14px 0 8px; font: 450 22px/1.2 var(--serif); letter-spacing: -0.015em; }
-.card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.card h2 { margin: 12px 0 6px; font: 600 22px/1.2 var(--display); }
+.card p { margin: 0; color: var(--muted); font-size: 14px; }
 .card-icon {
-  width: 50px; height: 50px; margin: 0 auto;
+  width: 48px; height: 48px; margin: 0 auto;
   display: grid; place-items: center;
   border-radius: 50%;
-  background: rgb(255 77 109 / 0.12);
-  box-shadow: inset 0 0 0 1px rgb(255 77 109 / 0.25);
+  background: var(--accent-soft);
 }
-.card-icon svg { width: 22px; height: 20px; fill: var(--red); }
+.card-icon svg { width: 22px; height: 20px; fill: var(--accent); }
 .spinner {
   width: 20px; height: 20px; border-radius: 50%;
-  border: 2.5px solid rgb(255 77 109 / 0.22);
-  border-top-color: var(--red);
+  border: 2.5px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border-top-color: var(--accent);
   animation: spin 0.9s linear infinite;
 }
 

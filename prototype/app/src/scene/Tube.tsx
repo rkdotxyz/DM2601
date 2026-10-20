@@ -32,19 +32,20 @@ export function Tube({ person, curve, world }: { person: Person; curve: THREE.Cu
   return (
     <group>
       <mesh geometry={core} material={liquid.material} />
-      <mesh geometry={glass} renderOrder={1}>
-        <meshPhysicalMaterial color="#3a1220" transparent opacity={0.28} roughness={0.15} side={THREE.BackSide} depthWrite={false} />
-      </mesh>
-      <mesh geometry={glass} renderOrder={3}>
+      {/* frosted glass, like the heart */}
+      <mesh geometry={glass}>
         <meshPhysicalMaterial
-          color="#000000"
-          roughness={0.03}
-          clearcoat={1}
-          clearcoatRoughness={0.04}
-          envMapIntensity={3}
-          transparent
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
+          color="#ffffff"
+          transmission={1}
+          roughness={0.32}
+          thickness={0.25}
+          ior={1.3}
+          attenuationColor="#f6e1dd"
+          attenuationDistance={2.5}
+          clearcoat={0.35}
+          clearcoatRoughness={0.4}
+          specularIntensity={0.45}
+          envMapIntensity={0.7}
         />
       </mesh>
     </group>

@@ -12,18 +12,6 @@
   color-scheme: light;
 }
 
-.app[data-night='true'] {
-  --paper: #151827;
-  --panel: #1c2033;
-  --ink: #eeeaf2;
-  --muted: #a3a2b8;
-  --line: #2f3450;
-  --accent: #ff6b86;
-  --accent-soft: #3a2537;
-  --chip: #252a40;
-  color-scheme: dark;
-}
-
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body {
@@ -227,6 +215,10 @@ h2 { font-family: var(--display); font-weight: 600; font-size: 22px; margin: 0 0
   border: 1px solid var(--line);
 }
 .place-name {
+  /* A fixed width that fits the longest name, so the bar doesn't resize
+     as you step through the places. */
+  width: 196px;
+  justify-content: center;
   display: flex; align-items: center; gap: 8px;
   border: 0; background: none;
   padding: 0 10px;
@@ -236,7 +228,8 @@ h2 { font-family: var(--display); font-weight: 600; font-size: 22px; margin: 0 0
   border-radius: 999px;
 }
 .place-name:hover { background: var(--accent-soft); }
-.place-count { font-weight: 500; color: var(--muted); font-size: 12px; }
+.place-name > span:first-of-type { overflow: hidden; text-overflow: ellipsis; }
+.place-count { font-weight: 500; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .place-menu {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -267,6 +260,8 @@ h2 { font-family: var(--display); font-weight: 600; font-size: 22px; margin: 0 0
   color: var(--ink);
 }
 .icon-button:hover { border-color: var(--muted); }
+.icon-button[aria-pressed='true'] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.icon-button:disabled { opacity: 0.45; cursor: default; }
 
 /* ---------- phones and narrow windows ---------- */
 @media (max-width: 860px) {

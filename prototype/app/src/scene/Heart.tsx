@@ -117,7 +117,8 @@ export function Heart({ world }: { world: RefObject<World> }) {
     }
     if (halo.current) {
       const m = halo.current.material as THREE.MeshBasicMaterial;
-      m.opacity = 0.08 + sl.level * 0.18 + w.glow * 0.35 + w.beat * 0.25;
+      // A soft pink haze on the paper behind the heart.
+      m.opacity = (0.08 + sl.level * 0.18 + w.glow * 0.35 + w.beat * 0.25) * 0.45;
       halo.current.scale.setScalar(1 + w.beat * 0.08);
     }
   });
@@ -127,7 +128,7 @@ export function Heart({ world }: { world: RefObject<World> }) {
       {/* A warm glow behind the heart. */}
       <mesh ref={halo} position={[0, 0, -0.9]} renderOrder={-1}>
         <planeGeometry args={[5.2, 5.2]} />
-        <meshBasicMaterial map={haloTex} transparent depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
+        <meshBasicMaterial map={haloTex} transparent depthWrite={false} toneMapped={false} />
       </mesh>
 
       <group ref={group}>
@@ -143,24 +144,22 @@ export function Heart({ world }: { world: RefObject<World> }) {
           <meshBasicMaterial color="#ffd0d8" transparent opacity={0.55} toneMapped={false} />
         </instancedMesh>
 
-        {/* Glass: only its reflections are drawn (added on top as light),
-            so the liquid behind keeps its true colour. */}
-        <mesh geometry={glass} renderOrder={3}>
+        {/* Frosted glass, soft like the website: the liquid shows through,
+            gently blurred, with no hard reflections. */}
+        <mesh geometry={glass}>
           <meshPhysicalMaterial
-            color="#000000"
-            roughness={0.03}
-            metalness={0}
-            clearcoat={1}
-            clearcoatRoughness={0.03}
-            specularIntensity={1}
-            envMapIntensity={2.2}
-            transparent
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
+            color="#ffffff"
+            transmission={1}
+            roughness={0.2}
+            thickness={0.9}
+            ior={1.3}
+            attenuationColor="#f6e1dd"
+            attenuationDistance={2.5}
+            clearcoat={0.35}
+            clearcoatRoughness={0.4}
+            specularIntensity={0.45}
+            envMapIntensity={0.7}
           />
-        </mesh>
-        <mesh geometry={glass} renderOrder={1}>
-          <meshPhysicalMaterial color="#3a1220" transparent opacity={0.4} roughness={0.15} side={THREE.BackSide} depthWrite={false} envMapIntensity={0.8} />
         </mesh>
 
         <pointLight ref={light} color="#ff3d62" distance={5.5} decay={1.6} intensity={0} />

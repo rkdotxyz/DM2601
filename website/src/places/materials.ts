@@ -82,7 +82,7 @@ export function wallTexture(base: string) {
   }, [6, 3])
 }
 
-/** Sky seen through the window: day or night. */
+/** A sky, day or night: the view through the window (day) and the painting over the sofa (night). */
 export function skyTexture(night: boolean) {
   return make(`sky-${night}`, 512, 512, (ctx) => {
     const g = ctx.createLinearGradient(0, 0, 0, 512)

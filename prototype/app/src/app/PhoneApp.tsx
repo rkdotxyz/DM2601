@@ -52,8 +52,9 @@ export function PhoneApp({ link, simulated }: Props) {
         </div>
         <div className="bar-right">
           <button className="icon-btn" aria-label={muted ? "Turn sound on" : "Turn sound off"} aria-pressed={!muted}
+            title={muted ? "Sound on" : "Sound off"}
             onClick={() => { sound.unlock(); sound.setMuted(!muted); setMuted(!muted); }}>
-            {muted ? <SpeakerOff /> : <SpeakerOn />}
+            <Icon d={muted ? ICONS.soundOff : ICONS.soundOn} />
           </button>
           <LinkPill status={doll.link} simulated={simulated} />
         </div>
@@ -127,9 +128,12 @@ function LinkPill({ status, simulated }: { status: string; simulated: boolean })
   );
 }
 
-const SpeakerOn = () => (
-  <svg viewBox="0 0 24 24" aria-hidden><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" /><path className="wave" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" /></svg>
-);
-const SpeakerOff = () => (
-  <svg viewBox="0 0 24 24" aria-hidden><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" /><path className="wave" d="M16 9.5l5 5M21 9.5l-5 5" /></svg>
-);
+// Line icons in the website's style (website/src/App.tsx).
+function Icon({ d }: { d: string }) {
+  return <svg viewBox="0 0 24 24" aria-hidden="true"><path d={d} /></svg>;
+}
+
+const ICONS = {
+  soundOn: "M4 9.5h3.2L12 5.5v13l-4.8-4H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11",
+  soundOff: "M4 9.5h3.2L12 5.5v13l-4.8-4H4zM16 9.5l5 5M21 9.5l-5 5",
+};
